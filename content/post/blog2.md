@@ -15,7 +15,7 @@ Serializable, Comparable<File>
 
 以上是 jdk 关于 File的 视图
 
-我们学习File类 就从提供的api入手！！
+我们学习File类 就从提供的api入手
 
 一丶 构造方法
     首先File重写了四个构造方法 但这里之列举出我们最常用的两个构造方法
