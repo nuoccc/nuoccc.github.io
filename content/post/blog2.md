@@ -1,0 +1,123 @@
+---
+title: "关于File类基础以及遍历所有电脑文件"
+date: 2019-07-16T19:43:44+08:00
+
+---
+本章内容为：《关于File类基础以及遍历所有电脑文件》
+作者：nuoccc 
+
+java.io 
+类 File
+java.lang.Object
+  继承者 java.io.File
+所有已实现的接口： 
+Serializable, Comparable<File> 
+
+以上是 jdk 关于 File的 视图
+
+我们学习File类 就从提供的api入手
+
+一丶 构造方法
+    首先File重写了四个构造方法 但这里之列举出我们最常用的两个构造方法
+
+    第一个File(File parent,String child);// 这个是通过父路径 以及子路径创建一个路径
+    第二个File(String pathname);//直接传入一个路径
+
+    关于两种构造方法的实际应用具体如下：
+    1   File file = new File("D:/","testFile.txt");  //创建一个路劲为D:/testFile.txt 的路径
+    2   File file2 = new File("D:/testFile2.txt"); //创建一个路劲为D:/testFile2.txt 的路径
+
+二丶 exists()
+    用exists()来判断文件是否存在；返回一个boolean值 存在返回true 不存在 返回 false。
+    exists()一般用来判断文件是否存在 不存在则创立一个新文件。
+    例如:
+
+    File file3 = new File("D:/testFile3.txt");
+    if(!file3.exists()){//如果文件不存在则创建并提示创建成功，否则代表文件存在 
+        file3.creatNewFile();//文件创建的方法 creatNewFile()
+        System.out.println("文件创建成功！");
+    }else{
+        System.out.println("文件已存在,不用创建！");
+    }
+
+三丶判断文件的性质
+    这里有两个api 一个是isDirectory(), 一个是isFile();
+    第一个是用来判断当前对象是否是一个文件目录 是返回一个true 否则返回一个false；
+    第二个是用来判断当前对象是否是一个文件，是返回一个true,否则返回一个false;
+
+四丶文件的路径
+    文件的路径也是 两个api 一个是getPath(),另外一个是getAbsolutePath();
+    getPath()是将抽象路径名转化为一个路径名字字符串，
+    而getAbsolutePath()则是返回抽象路径名的绝对路径名字字符串，
+    虽然两者描速不太一样 但在实际上其实没有什么大的差别。
+
+五丶创建文件目录
+    一个是mkdir()，一个是mkdirs();
+     mkdir()只能创立一个目录而，mkdirs()则能创立多级目录,具体使用方法如下：
+
+     File fille = new File("D:/test1");
+     fille.mkdir();
+     File fille2 = new File("D:/test2/test3");
+     fill2.mkdirs();
+     这两个的返回值都是boolean 能创立则返回true 不能则返回false。
+
+六丶列出目录
+    列出文件一般用list() 返回一个字符串数组，返回当前指定的路径下所有的文件目录以及文件
+    例子如下：
+
+    File file4 = new File("c:/");//创建一个file4对象代表c盘的路径
+    String[] file5 = file4.list();//把c盘路径下所有返回的文件目录以及文件返回给一个String数组
+    for(String fname:file5){//遍历所有的文件名并打印
+        System.out.println(fname);//打印出来的为文件名
+    }
+
+    如果你想打印出来的是路径的格式
+    可以考虑使用listFile(),运用如下：
+    File[] file6=dir.listFiles();
+    for(File fname2:file6){
+        System.out.println(fname2);//打印出来的就是文件的路径
+    }
+
+    还有个方法可以直接列出系统的所有磁盘跟目录，运用如下：
+    File[] fr= File.listRoots();//把得到的磁盘目录给一个File数组来接受
+    for(File frname:fs){//遍历这个File数组 得到每个磁盘的名字
+        System.out.println(frname);
+    }
+
+七丶遍历电脑上某个磁盘的所有文件以及遍历所有磁盘的文件
+    有了上面的基础我们就可以实现标题的目的，具体如下:
+    首先创建一个 静态方法方便我们调用
+
+    public static void find(File file){
+        if(file.isFile()){//进行判断是否是一个文件，是的话就直接可以打印当前文件名
+            System.out.println(file.getAbsolutePath());
+        }else//不是文件则代表它是一个目录，所以我们需要打开文件并继续遍历它
+        File[] fs=file.listFiles();//这时候我们需要对需要遍历的文件进行判断，如果是空文件的话，我们后面使用迭代器遍历会报空指针异常，并且空文件里面也没文件，所以我们就要排除空文件
+        if(fs!=null){
+            for(File f:fs){
+                find(f)//得到的我们也不知道是文件还是目录 所以我们需要递归重新来进行判断
+            }
+        }
+    }   
+
+    public static void main(String[] args){
+        //在主方法中调用一下试试
+        find(new File("C：/"))//创立c盘根目录的匿名对象 然后就能遍历整个c盘
+    }
+
+    那我们怎么遍历整个电脑里面的文件呢？这时候就想起之前说的方法 listRoots() 可以得到整个磁盘根目录
+    然后我们就可以在主方法中这样用
+     public static void main(String[] args){
+        //在主方法中调用一下试试
+       // find(new File("C：/"))//创立c盘根目录的匿名对象 然后就能遍历整个c盘
+
+       //获取整个磁盘的根目录 并遍历他们
+       File[] fr = File.listRoots();
+       for(File frname:fr){//得到了每个磁盘的根目录后 我们又可以调用find 方法来遍历当前根目录的所有文件
+        find(franme);
+
+       }
+    }
+
+关于File类api的基础运用就这些，都是一些基础知识可能对你有用可能对你没用，如果有错误可以联系我我会及时改正。
+
