@@ -30,7 +30,7 @@ Serializable, Comparable<File>
 二丶 exists()
     用exists()来判断文件是否存在；返回一个boolean值 存在返回true 不存在 返回 false。
     exists()一般用来判断文件是否存在 不存在则创立一个新文件。
-    例如:
+    例:
 
     File file3 = new File("D:/testFile3.txt");
     if(!file3.exists()){//如果文件不存在则创建并提示创建成功，否则代表文件存在 
