@@ -68,8 +68,9 @@ Runnable
 
 <p><code>
 Thread th = new Thread();
-</code>
-2.Thread(Runnable target),那Runnable是啥，我们看api底层定义</p>
+</code></p>
+
+<p>2.Thread(Runnable target),那Runnable是啥，我们看api底层定义</p>
 
 <pre><code>    @FunctionalInterface
 public interface Runnable {
@@ -136,7 +137,80 @@ public interface Runnable {
 </code></pre>
 
 <p>我们来看看控制台输出:
- <img src="Threadimg/Thread1.png" alt="avatar" /></p></li>
+ <img src="Threadimg/Thread1.png" alt="avatar" />
+这样我们第一个多线程就做完了，但是并没有体现出多线程，为了方便观看我们改改代码
+我们在第一个函数里面加个for循环 并打印当前i</p>
+
+<pre><code>public static void main(String[] args){
+    sonThread son = new sonThread();
+    son.start();
+    sonThread son3 =new sonThread();
+    son3.start();
+   /* Thread son2 = new Thread(new sonThread2());
+    son2.start();*/
+}
+</code></pre>
+
+<p>我们来看看打印结果：
+ <img src="Threadimg/Thread2.png" alt="avatar" />
+很直观的就能看出多线程的并发执行，但是现在又引出一个疑问那我们怎么区分是哪个线程？</p></li>
+</ul>
+
+<h2 id="线程的命名以及获取名字">线程的命名以及获取名字</h2>
+
+<ul>
+<li><p>基于上面的问题，我们就想能不能给线程也设置一个名字，这样我们就能区分到底是哪个线程在调用了。
+所以Thread的api也给了我们一个方法setName(),以及获取名字的方法getName(),我们来看看具体的使用
+我们就在原来的主函数上进行修改</p>
+
+<p><code>
+son.setName(&quot;子程序一号&quot;);//另外一个相应的也取个名字，注意这个要放在start()方法前
+</code></p>
+
+<p>然后修改一下子线程类里面的打印语句</p>
+
+<p><code>
+System.out.println(this.getName()+&quot;子线程运行！&quot;+i);
+</code></p>
+
+<p>然后我们再来看看控制台打印结果:
+ <img src="Threadimg/Thread3.png" alt="avatar" />
+这样就非常明显的能看出多线程，以及是哪个线程在运行了。但是又有一个问题产生了：
+这是getName()这个方法是Thread对象才能获取的，如果我们是实现的借口应该怎么弄呢？
+于是api也给我们提供了一个相应的方法可以放回一个Thread对象这样就能使用getName(),具体如下：</p>
+
+<p><code>
+System.out.println(Thread.currentThread().getName()+&quot;子线程2运行！&quot;+i);
+</code></p>
+
+<p>上面这个是修改的借口那个线程类的打印，然后我们再来控制台看看效果：
+<img src="Threadimg/Thread4.png" alt="avatar" /></p></li>
+</ul>
+
+<h2 id="线程的休眠以及打破睡眠">线程的休眠以及打破睡眠</h2>
+
+<ul>
+<li><p>计算机的计算能力现在已经非常强了，所以一秒内，线程执行的次数也非常多，所以我们想要观察某些
+线程的运行情况反而十分困难，于是api提供了一个方法sleep(long),参数是时间以毫秒为单位
+我们来用代码举个例子，比如我想让线程一不运行这么快，一秒运行一次，我们就可以这样做，
+为了更加直观的观看效果，我把一个线程改成打印时间，有兴趣的可以自己试试，下面我们来看代码：</p>
+
+<pre><code>class sonThread extends Thread
+{
+        
+    @Override
+    public void run() {
+      for(int i=0;i&lt;100;i++) {
+        System.out.println(this.getName()+&quot;子线程运行！&quot;+i);
+      try {
+        Thread.sleep(1000);//加入休眠时间1s
+      } catch (InterruptedException e) {
+          e.printStackTrace();
+       }
+    }
+  }
+}
+</code></pre></li>
 </ul>
 
   </section>
