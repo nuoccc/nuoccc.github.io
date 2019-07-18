@@ -14,7 +14,7 @@
 
 <header>
   <div class="container clearfix">
-    <a class="path" href="https://nuoccc.github.io">[My New Hugo Site]</a>
+    <a class="path" href="http://nuoccc.github.io/">[My New Hugo Site]</a>
     <span class="caret"># _</span>
     <div class="right">
       
@@ -49,7 +49,7 @@
   <div class="article-list">
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/blog2/">关于File类基础以及遍历所有电脑文件</a></h2>
+  <h2 class="headline" itemprop="headline"><a href="/post/file/">关于File类基础以及遍历所有电脑文件</a></h2>
   <div class="meta">
 
     <span class="key">published on</span>
@@ -58,26 +58,18 @@
   </div>
   <section class="summary">
     本章内容为：《关于File类基础以及遍历所有电脑文件》 作者：nuoccc
-java.io 类 File java.lang.Object 继承者 java.io.File 所有已实现的接口： Serializable, Comparable
+java.io
+类 File
+java.lang.Object
+继承者 java.io.File
+所有已实现的接口：
+Serializable, Comparable
 以上是 jdk 关于 File的 视图
 我们学习File类 就从提供的api入手
-一丶 构造方法 首先File重写了四个构造方法 但这里之列举出我们最常用的两个构造方法
-第一个File(File parent,String child);// 这个是通过父路径 以及子路径创建一个路径 第二个File(String pathname);//直接传入一个路径 关于两种构造方法的实际应用具体如下： 1 File file = new File(&quot;D:/&quot;,&quot;testFile.txt&quot;); //创建一个路劲为D:/testFile.txt 的路径 2 File file2 = new File(&quot;D:/testFile2.txt&quot;); //创建一个路劲为D:/testFile2.txt 的路径  二丶 exists() 用exists()来判断文件是否存在；返回一个boolean值 存在返回true 不存在 返回 false。 exists()一般用来判断文件是否存在 不存在则创立一个新文件。 例如:
-File file3 = new File(&quot;D:/testFile3.txt&quot;); if(!file3.exists()){//如果文件不存在则创建并提示创建成功，否则代表文件存在 file3.creatNewFile();//文件创建的方法 creatNewFile() System.out.println(&quot;文件创建成功！&quot;); }else{ System.out.println(&quot;文件已存在,不用创建！&quot;); }  三丶判断文件的性质 这里有两个api 一个是isDirectory(), 一个是isFile(); 第一个是用来判断当前对象是否是一个文件目录 是返回一个true 否则返回一个false； 第二个是用来判断当前对象是否是一个文件，是返回一个true,否则返回一个false;  <a href="/post/blog2/">Read More...</a>
-  </section>
-</article>
-
-    
-      <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/blog/">这是第一篇blog (Draft)</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2019-07-16">July 16, 2019</time></span>
-
-  </div>
-  <section class="summary">
-    这是我第一篇blog。 
+构造器  首先File重写了四个构造方法 但这里之列举出我们最常用的两个构造方法 第一个File(File parent,String child);// 这个是通过父路径 以及子路径创建一个路径 第二个File(String pathname);//直接传入一个路径
+ 关于两种构造方法的实际应用具体如下：
+1 File file = new File(&quot;D:/&quot;,&quot;testFile.txt&quot;); //创建一个路劲为D:/testFile.txt 的路径 2 File file2 = new File(&quot;D:/testFile2.txt&quot;); //创建一个路劲为D:/testFile2.txt 的路径   exists()  用exists()来判断文件是否存在；返回一个boolean值 存在返回true 不存在 返回 false。 exists()一般用来判断文件是否存在 不存在则创立一个新文件。 例如:
+File file3 = new File(&quot;D:/testFile3.txt&quot;); if(!file3.exists()){//如果文件不存在则创建并提示创建成功，否则代表文件存在 file3.creatNewFile();//文件创建的方法 creatNewFile() System.out.println(&quot;文件创建成功！&quot;); }else{ System.  <a href="/post/file/">Read More...</a>
   </section>
 </article>
 

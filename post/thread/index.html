@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="generator" content="Hugo 0.55.6" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="My New Hugo Site">
+<title>Thread - My New Hugo Site</title>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="http://example.org/">[My New Hugo Site]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2019-07-18">July 18, 2019</time></span>
+
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">Thread</h1>
+  <section class="body" itemprop="articleBody">
+    
+
+<p>本章内容为：《关于Thread类基础》
+作者：nuoccc</p>
+
+<pre><code>java.lang 
+
+类 Thread
+
+java.lang.Object
+
+  继承者 java.lang.Thread
+
+所有已实现的接口： 
+
+Runnable 
+</code></pre>
+
+<p>以上是 jdk 关于Thread的 视图</p>
+
+<p>我们学习Thread类 就从提供的api入手</p>
+
+<h2 id="构造器">构造器</h2>
+
+<ul>
+<li><p>学一个类一般我们都是先学构造器，Thread有多个，但我们一般用两个
+1.Thread()，默认构造器，用法为：</p>
+
+<p><code>
+Thread th = new Thread();
+</code>
+2.Thread(Runnable target),那Runnable是啥，我们看api底层定义</p>
+
+<pre><code>    @FunctionalInterface
+public interface Runnable {
+    //中间一段注释我删了，有兴趣的可以自行通过底层查看
+    public abstract void run();
+}
+</code></pre>
+
+<p>一目了然，Runnable是一个接口，定义了一个抽象方法run();所以我们在运用时就应该
+使用一个实现了Runnable接口的对象我们从api视图可以知道，Thread实现了Runnable
+接口，所以最常用的对象一般就是一个Thread的子类</p></li>
+</ul>
+
+<h2 id="线程使用方法">线程使用方法</h2>
+
+<ul>
+<li><p>一个类最关键的是如果使用，我们看api手册，给出的方法
+1.创建新执行线程有两种方法。一种方法是将类声明为 Thread 的子类。该子类应重写 Thread 类的 run 方法。接下来可以分配并启动该子类的实例。
+2.创建线程的另一种方法是声明实现 Runnable 接口的类。该类然后实现 run 方法。然后可以分配该类的实例，在创建 Thread 时作为一个参数来传递并启动。
+那我们根据手册给出的方法来使用Thread类</p>
+
+<p>1.根据第一种方法我们先创立一个子类，这里名字取为sonThread继承Thread</p>
+
+<pre><code>class sonThread extends Thread
+{
+    //会叫你重写一个run()方法，具体的定义为自己要执行的逻辑代码
+    //这里我们写一条输出语句随便测试下
+    @Override
+    public void run() {
+        System.out.println(&quot;子线程运行！&quot;);
+    }
+
+}
+</code></pre>
+
+<p>子类写完了，我们在主函数中调用一下，主函数就是主线程，所以一个进程中至少包含一个线程</p>
+
+<pre><code>public static void main(String[] args){
+    sonThread son = new sonThread();
+    ~~son.run()~~;//如果直接调用这个方法，那跟普通的程序有什么区别呢？
+    //所以Thread给了一个方法start();调用这个方法才能变成线程运行。
+    son.start();//这样我们第一个线程调用就完成了
+
+}
+</code></pre>
+
+<p>2.创建一个子类实现Runnable接口</p>
+
+<pre><code>class sonThread2 implements Runnable{
+    //也会重写run()方法，我们同样打印一个输出语句
+    @Override
+    public void run() {
+        System.out.println(&quot;子线程2运行！&quot;);
+    }
+}
+</code></pre>
+
+<p>同样的，我们在主函数中调用，但是要注意了，我们这时候就要用之前提到的第二种构造器</p>
+
+<pre><code>public static void main(String[] args){
+    Thread son2 = new Thread(new sonThread2());
+    son2.start();
+}
+</code></pre>
+
+<p>我们来看看控制台输出：
+<img src="Threadimg/Thread1.png" alt="avatar" /></p></li>
+</ul>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2019 My New Hugo Site - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
