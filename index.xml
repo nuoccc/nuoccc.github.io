@@ -6,10 +6,27 @@
     <description>Recent content on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 16 Jul 2019 19:43:44 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 18 Jul 2019 19:05:14 +0800</lastBuildDate>
     
 	<atom:link href="https://nuoccc.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Thread</title>
+      <link>https://nuoccc.github.io/post/thread/</link>
+      <pubDate>Thu, 18 Jul 2019 19:05:14 +0800</pubDate>
+      
+      <guid>https://nuoccc.github.io/post/thread/</guid>
+      <description>本章内容为：《关于Thread类基础》 作者：nuoccc
+java.lang 类 Thread java.lang.Object 继承者 java.lang.Thread 所有已实现的接口： Runnable  以上是 jdk 关于Thread的 视图
+我们学习Thread类 就从提供的api入手
+构造器  学一个类一般我们都是先学构造器，Thread有多个，但我们一般用两个 1.Thread()，默认构造器，用法为：
+ Thread th = new Thread();  2.Thread(Runnable target),那Runnable是啥，我们看api底层定义
+ @FunctionalInterface public interface Runnable { //中间一段注释我删了，有兴趣的可以自行通过底层查看 public abstract void run(); }  一目了然，Runnable是一个接口，定义了一个抽象方法run();所以我们在运用时就应该 使用一个实现了Runnable接口的对象我们从api视图可以知道，Thread实现了Runnable 接口，所以最常用的对象一般就是一个Thread的子类
+  线程使用方法  一个类最关键的是如果使用，我们看api手册，给出的方法 1.创建新执行线程有两种方法。一种方法是将类声明为 Thread 的子类。该子类应重写 Thread 类的 run 方法。接下来可以分配并启动该子类的实例。 2.创建线程的另一种方法是声明实现 Runnable 接口的类。该类然后实现 run 方法。然后可以分配该类的实例，在创建 Thread 时作为一个参数来传递并启动。 那我们根据手册给出的方法来使用Thread类
+1.根据第一种方法我们先创立一个子类，这里名字取为sonThread继承Thread
+class sonThread extends Thread { //会叫你重写一个run()方法，具体的定义为自己要执行的逻辑代码 //这里我们写一条输出语句随便测试下 @Override public void run() { System.</description>
+    </item>
     
     <item>
       <title>关于File类基础以及遍历所有电脑文件</title>
