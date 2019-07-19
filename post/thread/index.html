@@ -137,8 +137,9 @@ public interface Runnable {
 </code></pre>
 
 <p>我们来看看控制台输出:
- <img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/Threadimg/Thread1.png" alt="avatar" />
-这样我们第一个多线程就做完了，但是并没有体现出多线程，为了方便观看我们改改代码
+ <img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/Threadimg/Thread1.png" alt="avatar" /></p>
+
+<p>这样我们第一个多线程就做完了，但是并没有体现出多线程，为了方便观看我们改改代码
 我们在第一个函数里面加个for循环 并打印当前i</p>
 
 <pre><code>public static void main(String[] args){
@@ -152,8 +153,9 @@ public interface Runnable {
 </code></pre>
 
 <p>我们来看看打印结果：
- <img src="Threadimg/Thread2.png" alt="avatar" />
-很直观的就能看出多线程的并发执行，但是现在又引出一个疑问那我们怎么区分是哪个线程？</p></li>
+<img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/Threadimg/Thread2.png" alt="avatar" /></p>
+
+<p>很直观的就能看出多线程的并发执行，但是现在又引出一个疑问那我们怎么区分是哪个线程？</p></li>
 </ul>
 
 <h2 id="线程的命名以及获取名字">线程的命名以及获取名字</h2>
@@ -174,8 +176,9 @@ System.out.println(this.getName()+&quot;子线程运行！&quot;+i);
 </code></p>
 
 <p>然后我们再来看看控制台打印结果:
- <img src="Threadimg/Thread3.png" alt="avatar" />
-这样就非常明显的能看出多线程，以及是哪个线程在运行了。但是又有一个问题产生了：
+ <img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/Threadimg/Thread3.png" alt="avatar" /></p>
+
+<p>这样就非常明显的能看出多线程，以及是哪个线程在运行了。但是又有一个问题产生了：
 这是getName()这个方法是Thread对象才能获取的，如果我们是实现的借口应该怎么弄呢？
 于是api也给我们提供了一个相应的方法可以放回一个Thread对象这样就能使用getName(),具体如下：</p>
 
@@ -183,8 +186,7 @@ System.out.println(this.getName()+&quot;子线程运行！&quot;+i);
 System.out.println(Thread.currentThread().getName()+&quot;子线程2运行！&quot;+i);
 </code></p>
 
-<p>上面这个是修改的借口那个线程类的打印，然后我们再来控制台看看效果：
-<img src="Threadimg/Thread4.png" alt="avatar" /></p></li>
+<p>上面这个是修改的借口那个线程类的打印，然后我们再来控制台看看效果：</p></li>
 </ul>
 
 <h2 id="线程的休眠以及打破睡眠">线程的休眠以及打破睡眠</h2>
@@ -212,7 +214,9 @@ System.out.println(Thread.currentThread().getName()+&quot;子线程2运行！&qu
 }
 </code></pre>
 
-<p>这样就完了</p></li>
+<p><img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/Threadimg/Thread4.png" alt="avatar" /></p>
+
+<p>能够看出程序按我们想象中的一秒打印一次。</p></li>
 </ul>
 
   </section>
