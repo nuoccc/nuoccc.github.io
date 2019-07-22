@@ -29,6 +29,29 @@
   <h1 class="list-title">Posts</h1>
   
     <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/netcommution/">NetCommution</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2019-07-22">July 22, 2019</time></span>
+
+  </div>
+  <section class="summary">
+    本章内容为：《Socket通信基础》
+作者：nuoccc 首先我们来了解一下什么是TCP和UDP协议：  TCP协议：有连接协议，需要建立三次握手连接后才通讯，可以可靠的通讯，还可以处理数据出错的问题，因为有这些机制，所以通讯效率略低，但通讯是最可靠的。 UDP协议：无连接协议，发送到对应的IP地址后就不管了，至于收没收到，有没有出错也不会处理，所以通讯效率略高，但不可靠。 我们来看张图来了解一下Socket通信的原理： Tcp实现的Socket通信是基于TCP三次握手，下面是TCP三次握手的流程图：  基于Tcp三次握手，改进为客户机和服务器进行Socket通信，于是可以变为下图:
+我们基于这个图来完成对Socket通信的编程: 首先我们需要创建一个对象对客户机端口进行监听:
+ ServerSocket serverSocket = new ServerSocket(8888);//里面放端口号，端口号一定要跟客户机通信端口一致 
+这里我们要了解什么是端口号，端口号可以这样理解: 因为我们一台电脑对应一个ip地址，如果只有一个ip地址我们的应用也会只是单一的，但我们电脑现在都是多任务系统，同时有多个应用会进行通信，于是产生了端口号来解决这个问题，实现多通信。数据的发送和接收都需要通过端口出入计算机，端口号用于唯一标识通信实体上进行网络通讯的程序，同一台机器上不能两个程序占用同一个端口。了解完端口号，我们继续来说程序。 然后创立一个Socket 对象来完成连接
+ Socket socket = serverSocket.accept(); 
+完成好连接后就能进行数据的读写操作，我们用一个线程来完成这个步骤
+ SockertThread th = new SocketThread(socket); 
+然后创立好相应的线程类
+class SocketThread extends Thread{ private Socket socket; public SocketThread(){ } public SocketThread(Socket socket){ this.socket=socket; } @Override public void run(){ try{ InputStream in = socket.getInputStream();//获取当前对象socket来获取客户机的输入流 byte[] b = new byte[1024]; in.read(b)//这里假设数据小于1024，一次读完，也可以用while来读数据 String info = new String(b);//创建一个字符串来接受获得的信息 System.  <a href="/post/netcommution/">Read More...</a>
+  </section>
+</article>
+
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
   <h2 class="headline" itemprop="headline"><a href="/post/thread/">Thread</a></h2>
   <div class="meta">
 
