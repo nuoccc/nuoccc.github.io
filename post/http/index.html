@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
 <link rel="alternate" href="/index.xml" type="application/rss+xml" title="My New Hugo Site">
-<title>HttpAndUdp - My New Hugo Site</title>
+<title>HttpAndUdpSocket - My New Hugo Site</title>
 </head>
 <body>
 
@@ -36,21 +36,22 @@
 
 
   </div>
-  <h1 class="headline" itemprop="headline">HttpAndUdp</h1>
+  <h1 class="headline" itemprop="headline">HttpAndUdpSocket</h1>
   <section class="body" itemprop="articleBody">
     
 
 <hr />
 
-<p>本章内容为：《Http和UDP通信基础》
-作者：nuoccc</p>
+<p>本章内容为：《Http和UDP完成Socket通信基础》</p>
+
+<h2 id="作者-nuoccc">作者：nuoccc</h2>
 
 <h3 id="首先我们来了解一下什么是http以及它的工作原理-以下是百度百科关于http的说法">首先我们来了解一下什么是http以及它的工作原理 以下是百度百科关于http的说法:</h3>
 
 <ul>
 <li><p>HTTP是一个简单的请求-响应协议，它通常运行在TCP之上。它指定了客户端可能发送给服务器什么样的消息以及得到什么样的响应。请求和响应消息的头以ASCII码形式给出；而消息内容则具有一个类似MIME的格式。</p></li>
 
-<li><p>HTTP是基于客户/服务器模式，且面向连接的。典型的HTTP事务处理有如下的过程： [8]
+<li><p>HTTP是基于客户/服务器模式，且面向连接的。典型的HTTP事务处理有如下的过程：
 （1）客户与服务器建立连接；
 （2）客户向服务器提出请求；
 （3）服务器接受请求，并根据请求返回相应的文件作为应答；
@@ -124,6 +125,58 @@ if(responseCode==HttpURLConnection.HTTP_OK){
 <li>UDP 是User Datagram Protocol的简称， 中文名是用户数据报协议，是OSI（Open System Interconnection，开放式系统互联） 参考模型中一种无连接的传输层协议，提供面向事务的简单不可靠信息传送服务，IETF RFC 768 [1]  是UDP的正式规范。UDP在IP报文的协议号是17。</li>
 <li>UDP协议与TCP协议一样用于处理数据包，在OSI模型中，两者都位于传输层，处于IP协议的上一层。UDP有不提供数据包分组、组装和不能对数据包进行排序的缺点，也就是说，当报文发送之后，是无法得知其是否安全完整到达的。</li>
 </ul>
+
+<p>然后因为Udp跟Tcp一样都位于传输层，所以我们跟Tcp一样模拟一个客户机一个服务器。
+首先我们来实现Udp的客户机代码，先创立一个Udp的Socket对象</p>
+
+<pre><code>DatagramSocket socket = new DatagramSocket();
+//本来有多种构造函数，但我们选择无参构造函数，因为发送端的socket的端口号是由系统分配的。
+</code></pre>
+
+<p>之后我们创建需要发送的内容，也就是数据报：</p>
+
+<pre><code>String msg = &quot;hello,udp&quot;;
+DataggramPacket packet = new DatagramPacket(msg.getBytes(),msg.length(),
+                                    InetAddress.getByName(&quot;127.0.0.1&quot;),8888);
+//官方给出的构造函数,需要传的参数为数据报的内容，长度，以及目的地址，和端口号
+//public DatagramPacket(byte buf[], int length,
+//                       InetAddress address, int port) {
+socket.send(packet);
+//通过socket把数据报发送出去到服务器，然后客户端就完成了。
+</code></pre>
+
+<p>然后我们来创建服务器程序,首先还是一样创建一个Udp的Socket对象</p>
+
+<pre><code>DatagramSocket socket = new DatagramSocket(8888);
+//这里我们要传一个端口号来保持跟客户机的一致
+</code></pre>
+
+<p>然后把接受到的数据报数据封装到我们服务器的数据报中</p>
+
+<pre><code>byte[] buf = new byte[1024];
+DatagramPacket packet = new DatagramPacket(buf,buf.length);
+</code></pre>
+
+<p>然后用我们当前的socket来接受我们的数据报</p>
+
+<p><code>
+socket.receive(packet)；
+</code></p>
+
+<p>这样我们整个服务就完成了，当然也可以把数据报的内容打印出来</p>
+
+<pre><code>byte[] data = packet.getData();
+String str = new String(data);//创建一个str来接受数据报里面的数据
+InetAddress address=packet.getAddress();//创建一个address来接受客户机的地址
+int port=packet.getPort();//创建一个port来获取客户机发送的端口
+System.out.println(address+&quot;:&quot;+port+&quot;说&quot;+str);//最后创立一个打印来看下结果
+</code></pre>
+
+<p>我们来看下控制台打印结果:
+<img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/HttpAndUdpimg/HttpAndUdp4.png" alt="avatar" />
+我们看见打印出了我们预期结果的数据，但是端口号并不是我们给的，这也应证了端口号是系统随机给的，每次都并不一定相同。
+以上就是关于Http和Udp实现Socket编程的基础，Udp相当来说比Tcp代码少很多，因为是无连接少了三次握手，
+但是Udp也有好处就是速度快，所以在具体应用中，Udp和Tcp没好坏之分，全看应用场景。</p>
 
   </section>
 </article>

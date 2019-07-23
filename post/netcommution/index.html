@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/css/style.css" type="text/css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
 <link rel="alternate" href="/index.xml" type="application/rss+xml" title="My New Hugo Site">
-<title>NetCommution - My New Hugo Site</title>
+<title>TcpSocket - My New Hugo Site</title>
 </head>
 <body>
 
@@ -36,22 +36,20 @@
 
 
   </div>
-  <h1 class="headline" itemprop="headline">NetCommution</h1>
+  <h1 class="headline" itemprop="headline">TcpSocket</h1>
   <section class="body" itemprop="articleBody">
     
 
 <hr />
 
-<p>本章内容为：《Socket通信基础》</p>
+<p>本章内容为：《基于tcp完成Socket通信基础》</p>
 
 <h2 id="作者-nuoccc">作者：nuoccc</h2>
 
 <h3 id="首先我们来了解一下什么是tcp和udp协议">首先我们来了解一下什么是TCP和UDP协议：</h3>
 
 <ul>
-<li>TCP协议：有连接协议，需要建立三次握手连接后才通讯，可以可靠的通讯，还可以处理数据出错的问题，因为有这些机制，所以通讯效率略低，但通讯是最可靠的。</li>
-<li>UDP协议：无连接协议，发送到对应的IP地址后就不管了，至于收没收到，有没有出错也不会处理，所以通讯效率略高，但不可靠。
-我们来看张图来了解一下Socket通信的原理：
+<li>TCP协议：有连接协议，需要建立三次握手连接后才通讯，可以可靠的通讯，还可以处理数据出错的问题，因为有这些机制，所以通讯效率略低，但通讯是最可靠的。
 Tcp实现的Socket通信是基于TCP三次握手，下面是TCP三次握手的流程图：</li>
 </ul>
 
