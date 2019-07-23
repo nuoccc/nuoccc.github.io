@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="generator" content="Hugo 0.55.6" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="My New Hugo Site">
+<title>HttpAndUdp - My New Hugo Site</title>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="https://nuoccc.github.io/">[My New Hugo Site]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2019-07-23">July 23, 2019</time></span>
+
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">HttpAndUdp</h1>
+  <section class="body" itemprop="articleBody">
+    
+
+<hr />
+
+<p>本章内容为：《Http和UDP通信基础》
+作者：nuoccc</p>
+
+<h3 id="首先我们来了解一下什么是http以及它的工作原理-以下是百度百科关于http的说法">首先我们来了解一下什么是http以及它的工作原理 以下是百度百科关于http的说法:</h3>
+
+<ul>
+<li><p>HTTP是一个简单的请求-响应协议，它通常运行在TCP之上。它指定了客户端可能发送给服务器什么样的消息以及得到什么样的响应。请求和响应消息的头以ASCII码形式给出；而消息内容则具有一个类似MIME的格式。</p></li>
+
+<li><p>HTTP是基于客户/服务器模式，且面向连接的。典型的HTTP事务处理有如下的过程： [8]
+（1）客户与服务器建立连接；
+（2）客户向服务器提出请求；
+（3）服务器接受请求，并根据请求返回相应的文件作为应答；
+（4）客户与服务器关闭连接。
+大概的模型就像下图这样：
+<img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/HttpAndUdpimg/HttpAndUdp1.png" alt="avatar" /></p></li>
+</ul>
+
+<p>知道了工作原理，我们就通过工作原理来进行http的通讯编程。
+首先我们先创立一个URL对象</p>
+
+<pre><code>URL url = new URL(&quot;http://localhsot:8080/test/dream.jpg&quot;)；
+//这里我用的是TOMCAT服务器，所以基础地址是localhost,端口号是8080，
+后面是TOMCAT下的webapps下创建的test文件夹里面的dream图片
+</code></pre>
+
+<p>然后我们创建一个HttpURLconnection对象来获取url的连接</p>
+
+<pre><code>HttpURLConnection urlConn= (HttpURLConnection)url.openConnection();
+//由于url.openConnection()返回的是一个URL对象所以我们必须要转化为子类HttpURLConnection才能接受。
+</code></pre>
+
+<p>然后进行一些相关属性的设置，熟练就行</p>
+
+<pre><code>urlConn.setConnectTimeout(5000);//设置连接的超时时间.
+urlConn.setReadTimeout(5000);//设置读取数据的超时时间
+urlConn.setDoInput(true);//设置允许进行读操作
+urlConn.setDoOutput(true);//设置允许进行写操作
+urlConn.setRequestMethod(&quot;GET&quot;);//设置请求方式，http协议中指定提交方法有两种请求方式，
+一个是GET,一个是POST；这里我们用默认的GET，具体差距这里不讨论
+</code></pre>
+
+<p>设置完属性后就可以从服务器下载数据了，但是我们还是要确认一下服务器是否响应成功</p>
+
+<pre><code>//首先创立一个接受码来获取服务器响应的状态码
+int responseCode = urlConn.getResponseCode();
+//然后进行判断是否跟系统的正确状态码相同
+if(responseCode==HttpURLConnection.HTTP_OK){
+    //相同后我们就可以下载服务器数据了
+    //创建一个输入流来获取服务器的输入流
+    InputStream in = urlConn.getInputStream();
+    BufferedInputStream bis = new BufferedInputStream(in);
+    //然后在创建一个输出流来读输入流
+    FileOutputStream fos = new FileOutputStream(new File(E:/test/test.png));
+    BufferedOutputStream bos = new BufferedOutputStream(fos);
+    byte[] buf = new byte[1024];
+    int len = 0;
+    while((len=bis.read(buf))!=-1){
+        bos.write(buf,0,len);
+    }
+    //关闭流
+    bos.close();
+    bis.close();
+
+}
+</code></pre>
+
+<p>然后我们在TOMCAT的根目录下的bin文件下运行startup.bat来启动服务器，位置如下：</p>
+
+<p><img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/HttpAndUdpimg/HttpAndUdp2.png" alt="avatar" /></p>
+
+<p>然后启动我们的程序，来看看E:/test文件下是否创建了test.png</p>
+
+<p><img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/HttpAndUdpimg/HttpAndUdp3.png" alt="avatar" /></p>
+
+<p>已经创建，我们最基础的基于http通信就这样完成了，然后我们来使用基于udp的通信。</p>
+
+<h3 id="首先我们来了解一下什么是udp-以下是百度百科中关于udp的说法">首先我们来了解一下什么是UDP，以下是百度百科中关于UDP的说法:</h3>
+
+<ul>
+<li>UDP 是User Datagram Protocol的简称， 中文名是用户数据报协议，是OSI（Open System Interconnection，开放式系统互联） 参考模型中一种无连接的传输层协议，提供面向事务的简单不可靠信息传送服务，IETF RFC 768 [1]  是UDP的正式规范。UDP在IP报文的协议号是17。</li>
+<li>UDP协议与TCP协议一样用于处理数据包，在OSI模型中，两者都位于传输层，处于IP协议的上一层。UDP有不提供数据包分组、组装和不能对数据包进行排序的缺点，也就是说，当报文发送之后，是无法得知其是否安全完整到达的。</li>
+</ul>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2019 My New Hugo Site - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

@@ -6,10 +6,25 @@
     <description>Recent content in Posts on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 22 Jul 2019 19:19:50 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 23 Jul 2019 15:36:30 +0800</lastBuildDate>
     
 	<atom:link href="https://nuoccc.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>HttpAndUdp</title>
+      <link>https://nuoccc.github.io/post/http/</link>
+      <pubDate>Tue, 23 Jul 2019 15:36:30 +0800</pubDate>
+      
+      <guid>https://nuoccc.github.io/post/http/</guid>
+      <description>本章内容为：《Http和UDP通信基础》 作者：nuoccc
+首先我们来了解一下什么是http以及它的工作原理 以下是百度百科关于http的说法:  HTTP是一个简单的请求-响应协议，它通常运行在TCP之上。它指定了客户端可能发送给服务器什么样的消息以及得到什么样的响应。请求和响应消息的头以ASCII码形式给出；而消息内容则具有一个类似MIME的格式。
+ HTTP是基于客户/服务器模式，且面向连接的。典型的HTTP事务处理有如下的过程： [8] （1）客户与服务器建立连接； （2）客户向服务器提出请求； （3）服务器接受请求，并根据请求返回相应的文件作为应答； （4）客户与服务器关闭连接。 大概的模型就像下图这样：   知道了工作原理，我们就通过工作原理来进行http的通讯编程。 首先我们先创立一个URL对象
+URL url = new URL(&amp;quot;http://localhsot:8080/test/dream.jpg&amp;quot;)； //这里我用的是TOMCAT服务器，所以基础地址是localhost,端口号是8080， 后面是TOMCAT下的webapps下创建的test文件夹里面的dream图片  然后我们创建一个HttpURLconnection对象来获取url的连接
+HttpURLConnection urlConn= (HttpURLConnection)url.openConnection(); //由于url.openConnection()返回的是一个URL对象所以我们必须要转化为子类HttpURLConnection才能接受。  然后进行一些相关属性的设置，熟练就行
+urlConn.setConnectTimeout(5000);//设置连接的超时时间. urlConn.setReadTimeout(5000);//设置读取数据的超时时间 urlConn.setDoInput(true);//设置允许进行读操作 urlConn.setDoOutput(true);//设置允许进行写操作 urlConn.setRequestMethod(&amp;quot;GET&amp;quot;);//设置请求方式，http协议中指定提交方法有两种请求方式， 一个是GET,一个是POST；这里我们用默认的GET，具体差距这里不讨论  设置完属性后就可以从服务器下载数据了，但是我们还是要确认一下服务器是否响应成功
+//首先创立一个接受码来获取服务器响应的状态码 int responseCode = urlConn.getResponseCode(); //然后进行判断是否跟系统的正确状态码相同 if(responseCode==HttpURLConnection.HTTP_OK){ //相同后我们就可以下载服务器数据了 //创建一个输入流来获取服务器的输入流 InputStream in = urlConn.getInputStream(); BufferedInputStream bis = new BufferedInputStream(in); //然后在创建一个输出流来读输入流 FileOutputStream fos = new FileOutputStream(new File(E:/test/test.png)); BufferedOutputStream bos = new BufferedOutputStream(fos); byte[] buf = new byte[1024]; int len = 0; while((len=bis.</description>
+    </item>
     
     <item>
       <title>NetCommution</title>
