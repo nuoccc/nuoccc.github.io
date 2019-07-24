@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="generator" content="Hugo 0.55.6" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="My New Hugo Site">
+<title>Nio - My New Hugo Site</title>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="https://nuoccc.github.io/">[My New Hugo Site]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2019-07-24">July 24, 2019</time></span>
+
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">Nio</h1>
+  <section class="body" itemprop="articleBody">
+    
+
+<hr />
+
+<p>本章内容为：《NIO基础》</p>
+
+<h2 id="作者-nuoccc">作者：nuoccc</h2>
+
+<h3 id="首先我们来了解一下什么是nio">首先我们来了解一下什么是NIO；</h3>
+
+<ul>
+<li>NIO全程 Non-block I/O 中文意思就是无阻塞读写流，然后在我们NIO中有三个核心对象需要掌握</li>
+<li>缓冲区 （Buffer)</li>
+<li>通道 (Channel)</li>
+<li>选择器 (Selector)</li>
+<li>这篇文章就针对上述这三点进行了解</li>
+</ul>
+
+<h3 id="一丶buffer">一丶Buffer</h3>
+
+<p>Buffer有四个属性：1.capacity 容量 2. limit 上限 3. position 当前位置 4. mark 标记
+我们就直接通过一个程序来看看Buffer的API使用方法，以及加强对Buffer的四个属性的理解</p>
+
+<pre><code>InBuffer buffer = InBuffer.allocate(8);//我们先开辟一个长度为8的整型缓冲区
+//buffer的使用本质上就是创建一个数组来进行缓存
+for(int i = 0;i&lt;6;i++){
+    buffer.put(i);//把当前的i放进buffer里面，这时候poition会向后移一位
+    //position可以理解为栈的栈顶，是在数据的高一位
+}
+
+buffer.filp();//转化buffer的读写方式，默认为读方式，现在转化为写
+while(buff.hasRemaining()){//可以理解为has.next(),判断是否还有数据
+    int j = buffer.get();//从buffer里面取数据，这里j其实就是buffer每个数据的下标
+    System.out.print(j+&quot;&quot;)//输出当前j，瞅瞅是否跟我们预期一样
+}
+
+buffer.clear();//清空缓存区，重新读写
+//说是清空，实际上是把当前的position又重新置为0，当put一个数据时，就会重新覆盖原来的数据
+for(int i=0;i&lt;buff.capacity();i++){
+    buffer.put(i);
+}
+buffer.flip();
+while(buffer.hasReamining()){
+    int j = buffer.get();
+    System.out.println(j);
+}
+</code></pre>
+
+<p>其实Buffer还是挺好理解的，就是对一个数组进行读和写，但是我们后面的的都是基于buffer运行的。</p>
+
+<h3 id="二丶channel">二丶Channel</h3>
+
+<p>了解完Buffer之后我们来看看Channel(通道),那什么是Channel呢？
+我们首先来看一个图，来看看Channel的作用：
+<img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/NIOimg/NIOimg1.png" alt="avatar" />
+我们可以看出程序与程序之间数据传递并不是直接传递的，而是先通过Buffer然后再在Channel之间传递
+根据上图，我们就可以设计出程序来进行通讯。
+常用的Channel实现类有SocketChannel ServerSocketChannel DataGramChannel FileChannel ByteChannel
+我们在实际使用中来熟悉Channel的用法</p>
+
+<h3 id="首先是filechannel-我们应该模拟一个进行读数据-一个进行写数据">首先是FileChannel 我们应该模拟一个进行读数据 一个进行写数据</h3>
+
+<p>我们先基于FileChaneel的读数据进行编程：</p>
+
+<pre><code>FileInputStream fis = new FileInputStream(&quot;C:\\Users\\admin\\Desktop\\1.txt&quot;)；
+//先创立一个输入流
+FileChannel channel = fis.getChannel();//创立一个FileChannel对象跟输入流进行连接
+ByteBuffer buffer = ByteBuffer.allocate(1024);//我们开辟一片缓存区
+channel.read(buff);//注意这个意思是把channel对象读到的数据写入缓存区中
+buffer.filp();//然后我们切换成读取模式
+while(buffer.hasRemainning()){
+    byte b=buffer.get();
+    System.out.print((char)b);//打印一下看是否是我们文件的数据。
+}
+fis.close();//关闭输入流
+</code></pre>
+
+<p>我们来看下打印结果：
+<img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/NIOimg/NIOimg2.png" alt="avatar" />
+跟我们文档存储的数据是一致的，然后我们再来基于读操作进行写操作</p>
+
+<pre><code>FileOutputStream fos = new FileOutputStream(&quot;C:\\Users\\admin\\Desktop\\1.txt&quot;)
+FileChannel channel1 = fos.getChannel();//另外创一个FileChannel对象跟输出流进行连接
+ByteBuffer buffer1 = ByteBuffer.allocate(1024);//同样的开辟1k的缓冲区
+while(buff.hasReamining()){
+    //这是在之前读操作时，我们来实现读一个，我们写一个
+    byte b = buffer.get();
+    buffer1.put(b);//我们把当前读到的字节放入我们写数据的缓冲区
+}
+buffer1.filp();//我们接下来要进行把我们缓冲区的数据写入文档中，所以我们需要先读缓冲区的内容
+//所以我们要从写模式转化为读模式
+channel1.write(buffer1);//把从缓冲区读到的数据写入我们的channel中，然后就会传给我们的输出流
+fos.close();//最后关闭输出流
+</code></pre>
+
+<p>这样我们的一个基于FileChannel进行的文件拷贝就完成了，我们来看下桌面上的2.txt文件中是否有内容
+<img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/NIOimg/NIOimg3.png" alt="avatar" />
+文件内容与我们给出的文件内容相同 拷贝成功！</p>
+
+<h3 id="基于socketchannel来完成tcpsocket通信">基于SocketChannel来完成tcpsocket通信</h3>
+
+<p>用完了FileChannel我们再来用socketChannel来进行编程完成客户机与服务器的通信
+首先我们先创建一个客户机</p>
+
+<pre><code>SocketChannel socketChannel = SocketChannel.open();//此处跟tcp不一样，但也可以把socketChannel理解为socket
+//然后我们要先打开socketChannel
+socketChannel.connect(new InetSocketAddress(&quot;127.0.0.1&quot;,8888))；//然后建立跟服务器的连接
+//这里的InetSocetAddress跟InetAddress可以理解为一个东西，只不过把地址跟端口号封装在一起
+ByteBuffer writeBuffer = ByteBuffer.allocate(1024)；//开辟一块为1k的字节写缓存区
+String str=&quot;我是客户机&quot;;
+for(int i=0;i&lt;str.length();i++){
+    writeBuffer.put(str.getBytes()[i]);//把要传的数据变成字节类型传入写缓存区
+}
+writeBuffer.flip();//转化为读操作
+socketChannel.write(wirteBuffer);//把读到的数据写入Channel内，然后穿给服务器
+
+ByteBuffer readBuffer = ByteBuffer.allocate(1024)；//我们开辟一块为1k的字节读缓存区
+socketChannel.read(readBuffer);//把从服务端接受的数据写入缓存区中
+readBuffer.flip();//改为读模式
+byte[] buf =new byte[1024];
+while(readBuffer.hasRemaining()){
+    byte b = readBuffer.get();
+    buf[readBuff.position()-1]=b;//当前的position-1才会是对应的下标
+}
+String msg = new String(buf);
+System.out.println(&quot;服务端说&quot;+msg);//打印出服务器传的值
+</code></pre>
+
+<p>然后我们再来服务器的代码</p>
+
+<pre><code>ServerSocketChannel serverSocketChannel =  ServerSocketChannel.open();
+//首先跟客户机一样先打开，ServerSocketChannel跟ServerSocket可以看成一样的
+serverSocketChannel.bind(new InetSocketAddress(8888));//绑定端口
+SocketChannel socketChannel = serverSocketChannel.accept();//创建SocketChannel对象跟端口建立连接
+ByteBuffer readBuffer = ByteBuffer.allocate(1024);//开辟一块1k的字节读缓冲区
+ByteBuffer writeBuffer = ByteBuffer.allocate(1024);//开辟一块1k的字节写缓冲区
+socketChannel.read(readBuffer);//把缓冲区读到的内容写入Channel内
+readBuffer.flip();//将readBuffer改为读模式
+byte [] buf = new byte[1024];
+while (readBuffer.hasRemaining()){
+byte b =readBuffer.get();
+buf[readBuffer.position()-1]=b;//当前position-1才是当前下标
+}
+String msg = new String(buf);
+System.out.println(&quot;客户端说&quot;+msg);
+String str = &quot;我是服务器&quot;;
+for(int i=0;i&lt;str.length();i++){
+writeBuffer.put(str.getBytes()[i]);
+}
+writeBuffer.flip();
+socketChannel.write(writeBuffer);
+serverSocketChannel.close();
+</code></pre>
+
+<p>然后我们这样就完成了一个基于SocketChannel完成的客户机与服务器的通信。
+然后本章的内容到此结束，有机会会继续讲述关于选择器的知识。</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2019 My New Hugo Site - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

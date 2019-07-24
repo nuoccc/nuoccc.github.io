@@ -6,10 +6,22 @@
     <description>Recent content in Posts on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 23 Jul 2019 15:36:30 +0800</lastBuildDate>
+    <lastBuildDate>Wed, 24 Jul 2019 16:02:33 +0800</lastBuildDate>
     
 	<atom:link href="https://nuoccc.github.io/post/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Nio</title>
+      <link>https://nuoccc.github.io/post/nio/</link>
+      <pubDate>Wed, 24 Jul 2019 16:02:33 +0800</pubDate>
+      
+      <guid>https://nuoccc.github.io/post/nio/</guid>
+      <description>本章内容为：《NIO基础》
+作者：nuoccc 首先我们来了解一下什么是NIO；  NIO全程 Non-block I/O 中文意思就是无阻塞读写流，然后在我们NIO中有三个核心对象需要掌握 缓冲区 （Buffer) 通道 (Channel) 选择器 (Selector) 这篇文章就针对上述这三点进行了解  一丶Buffer Buffer有四个属性：1.capacity 容量 2. limit 上限 3. position 当前位置 4. mark 标记 我们就直接通过一个程序来看看Buffer的API使用方法，以及加强对Buffer的四个属性的理解
+InBuffer buffer = InBuffer.allocate(8);//我们先开辟一个长度为8的整型缓冲区 //buffer的使用本质上就是创建一个数组来进行缓存 for(int i = 0;i&amp;lt;6;i++){ buffer.put(i);//把当前的i放进buffer里面，这时候poition会向后移一位 //position可以理解为栈的栈顶，是在数据的高一位 } buffer.filp();//转化buffer的读写方式，默认为读方式，现在转化为写 while(buff.hasRemaining()){//可以理解为has.next(),判断是否还有数据 int j = buffer.get();//从buffer里面取数据，这里j其实就是buffer每个数据的下标 System.out.print(j+&amp;quot;&amp;quot;)//输出当前j，瞅瞅是否跟我们预期一样 } buffer.clear();//清空缓存区，重新读写 //说是清空，实际上是把当前的position又重新置为0，当put一个数据时，就会重新覆盖原来的数据 for(int i=0;i&amp;lt;buff.capacity();i++){ buffer.put(i); } buffer.flip(); while(buffer.hasReamining()){ int j = buffer.get(); System.out.println(j); }  其实Buffer还是挺好理解的，就是对一个数组进行读和写，但是我们后面的的都是基于buffer运行的。
+二丶Channel 了解完Buffer之后我们来看看Channel(通道),那什么是Channel呢？ 我们首先来看一个图，来看看Channel的作用： 我们可以看出程序与程序之间数据传递并不是直接传递的，而是先通过Buffer然后再在Channel之间传递 根据上图，我们就可以设计出程序来进行通讯。 常用的Channel实现类有SocketChannel ServerSocketChannel DataGramChannel FileChannel ByteChannel 我们在实际使用中来熟悉Channel的用法</description>
+    </item>
     
     <item>
       <title>HttpAndUdpSocket</title>

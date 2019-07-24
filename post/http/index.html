@@ -126,8 +126,9 @@ if(responseCode==HttpURLConnection.HTTP_OK){
 <li>UDP协议与TCP协议一样用于处理数据包，在OSI模型中，两者都位于传输层，处于IP协议的上一层。UDP有不提供数据包分组、组装和不能对数据包进行排序的缺点，也就是说，当报文发送之后，是无法得知其是否安全完整到达的。</li>
 </ul>
 
-<p>然后因为Udp跟Tcp一样都位于传输层，所以我们跟Tcp一样模拟一个客户机一个服务器。
-首先我们来实现Udp的客户机代码，先创立一个Udp的Socket对象</p>
+<p>了解完UDP后我们来用编程实现Udp实现通讯,因为Udp跟Tcp一样都位于传输层，所以我们跟Tcp一样模拟一个客户机一个服务器。</p>
+
+<p>首先我们来实现Udp的客户机代码，先创立一个Udp的Socket对象</p>
 
 <pre><code>DatagramSocket socket = new DatagramSocket();
 //本来有多种构造函数，但我们选择无参构造函数，因为发送端的socket的端口号是由系统分配的。
