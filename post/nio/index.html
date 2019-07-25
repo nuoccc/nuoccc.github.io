@@ -91,9 +91,11 @@ while(buffer.hasReamining()){
 <h3 id="二丶channel">二丶Channel</h3>
 
 <p>了解完Buffer之后我们来看看Channel(通道),那什么是Channel呢？
-我们首先来看一个图，来看看Channel的作用：
-<img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/NIOimg/NIOimg1.png" alt="avatar" />
-我们可以看出程序与程序之间数据传递并不是直接传递的，而是先通过Buffer然后再在Channel之间传递
+我们首先来看一个图，来看看Channel的作用：</p>
+
+<p><img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/NIOimg/NIOimg1.png" alt="avatar" /></p>
+
+<p>我们可以看出程序与程序之间数据传递并不是直接传递的，而是先通过Buffer然后再在Channel之间传递
 根据上图，我们就可以设计出程序来进行通讯。
 常用的Channel实现类有SocketChannel ServerSocketChannel DataGramChannel FileChannel ByteChannel
 我们在实际使用中来熟悉Channel的用法</p>
@@ -115,9 +117,11 @@ while(buffer.hasRemainning()){
 fis.close();//关闭输入流
 </code></pre>
 
-<p>我们来看下打印结果：
-<img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/NIOimg/NIOimg2.png" alt="avatar" />
-跟我们文档存储的数据是一致的，然后我们再来基于读操作进行写操作</p>
+<p>我们来看下打印结果：</p>
+
+<p><img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/NIOimg/NIOimg2.png" alt="avatar" /></p>
+
+<p>跟我们文档存储的数据是一致的，然后我们再来基于读操作进行写操作</p>
 
 <pre><code>FileOutputStream fos = new FileOutputStream(&quot;C:\\Users\\admin\\Desktop\\1.txt&quot;)
 FileChannel channel1 = fos.getChannel();//另外创一个FileChannel对象跟输出流进行连接
@@ -133,9 +137,11 @@ channel1.write(buffer1);//把从缓冲区读到的数据写入我们的channel�
 fos.close();//最后关闭输出流
 </code></pre>
 
-<p>这样我们的一个基于FileChannel进行的文件拷贝就完成了，我们来看下桌面上的2.txt文件中是否有内容
-<img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/NIOimg/NIOimg3.png" alt="avatar" />
-文件内容与我们给出的文件内容相同 拷贝成功！</p>
+<p>这样我们的一个基于FileChannel进行的文件拷贝就完成了，我们来看下桌面上的2.txt文件中是否有内容</p>
+
+<p><img src="https://github.com/nuoccc/nuoccc.github.io/raw/master/NIOimg/NIOimg3.png" alt="avatar" /></p>
+
+<p>文件内容与我们给出的文件内容相同 拷贝成功！</p>
 
 <h3 id="基于socketchannel来完成tcpsocket通信">基于SocketChannel来完成tcpsocket通信</h3>
 
