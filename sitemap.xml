@@ -4,19 +4,24 @@
   
   <url>
     <loc>https://nuoccc.github.io/</loc>
-    <lastmod>2019-07-24T16:02:33+08:00</lastmod>
+    <lastmod>2019-07-25T17:11:09+08:00</lastmod>
     <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nuoccc.github.io/post/</loc>
+    <lastmod>2019-07-25T17:11:09+08:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>https://nuoccc.github.io/post/selector/</loc>
+    <lastmod>2019-07-25T17:11:09+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://nuoccc.github.io/post/nio/</loc>
     <lastmod>2019-07-24T16:02:33+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://nuoccc.github.io/post/</loc>
-    <lastmod>2019-07-24T16:02:33+08:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>

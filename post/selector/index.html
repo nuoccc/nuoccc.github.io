@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="generator" content="Hugo 0.55.6" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="My New Hugo Site">
+<title>Selector - My New Hugo Site</title>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="https://nuoccc.github.io/">[My New Hugo Site]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2019-07-25">July 25, 2019</time></span>
+
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">Selector</h1>
+  <section class="body" itemprop="articleBody">
+    <p>本章内容为：《Selector基础》</p>
+
+<p>作者：nuoccc</p>
+
+<hr />
+
+<p>上一篇文章讲解了关于NIO基础的缓冲区Buffer以及通道Channel，这一篇文章我们主要讲关于选择器Selector的基础以及基于Selector我们进行服务器和客户机通讯。</p>
+
+<hr />
+
+<p>Selector 一般称为选择器，当然你也可以翻译为 多路复用器 。它是Java NIO核心组件中的一个，用于检查一个或多个NIO Channel（通道）的状态是否处于可读、可写。如此可以实现单线程管理多个channels,也就是可以管理多个网络链接。</p>
+
+<hr />
+
+<p>关于选择器的具体用法我们在代码中来详细使用和讲解。</p>
+
+<p>按照正常思维创建服务器和客户机模型进行通讯一般是先创造服务器，而我觉得先创造客户机更能帮助我们理解这个通讯过程，不先创造客户机，你服务器怎么知道我客户机进行的操作，所以我的思想就是先解决客户机，先把“我”的需求写出来后，在用服务器去满足“我”的需求。</p>
+
+<p>所以我们这次一样的先创建一个客户机，但是Selector其实并不用于客户机，只是用于服务器来选择跟哪个通道进行选择，所以我们客户机的代码就用Channel的客户机代码即可，这里快速写出来。</p>
+
+<pre><code class="language-java">public class ChannelClient{
+    public static void main(String args[]){
+        Thread th = new Thread(new Client(&quot;127.0.0.1&quot;,8888));//这次我们创建线程来完成通讯	
+        th.start();
+    }
+}
+
+class Client implements Runnable{
+    //创建一个线程
+    private SocketChannel socketChannel;//创建一个SocketChannel对象
+    private ByteBuffer readBuffer = ByteBuffer.allocate(1024);//开辟一个1k的字节读缓存区
+    private ByteBuffer writeBuffer = ByteBuffer.allocate(1024);//开辟一个1k的字节写缓存区
+    private String hostname;
+    private int port;
+    public Client (String hostname,int port){
+        this.hostname = hostname;
+        this.port = port;
+    }
+    
+    @Override
+    public void run(){
+        //重写run方法 把我们要进行的主要步骤放里面
+        try{
+            socketChannel = SocketChannel.oppen();//首先打开通道
+            socketChannel.connect(new InetSocketAddress(hostname,port));
+            //跟服务器进行连接
+            Scanner sc = new Scanner(System.in);
+            while(true){
+                //创建一个死循环，这样才能一直跟服务器进行通讯
+                String msg = sc.nextLine();
+                writeBuffer.put(msg.getBytes());//把传给服务器的信息放进写缓存区内
+                writeBuffer.filp();//转化为读模式;
+                socketChannel.write(writeBuffer);//把从写缓存区读到的内容，写入通道内
+                writeBuffer.clear();//重置我们的写缓存区，这样下次才能读新数据。
+                
+                while(socketChannel.read(readBuffer)!=-1){
+                 //如果通道能读到信息，说明服务器传信息过来了，这时我们才进行读操作
+                	readBuffer.flip();//转化为读模式
+                    byte[] buf = new byte[1024];
+                    readBuffer.get(buf,0,readBuffer.limit());
+                    //把读到的所有数据全部放到读缓存区内
+                    String str = new String(buf);
+                    System.out.println(&quot;服务器说&quot;+str);
+                    readBuffer.clear();//同样的重置读缓存区
+                }
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace(); 
+        }
+    }
+}
+</code></pre>
+
+<p>这样我们一个跟我们服务器进行交互的客户机就完成了，接下来我们就要进行我们的服务器的编写</p>
+
+<p>同样的我们在服务器中也用线程来解决通讯问题。</p>
+
+<p><code>Thread th = new Thread(new Server(8888));</code></p>
+
+<p><code>th.start</code></p>
+
+<p>然后看看线程中的代码</p>
+
+<pre><code class="language-java">class Server implements Runnable{
+	private Selector selector;//创建一个Selector选择器对象
+    private ByteBuffer readBuffer = ByteBuffer.allocate(1024);//开辟一个1k的字节读缓存区
+    private ByteBuffer writeBuffer = ByteBuffer.allocate(1024);//开辟一个1k的字节写缓存区
+    
+    public Server(int port){
+        //我们在构造函数中完成一系列的初始化
+        try{
+            selector = Selector.open();//跟Channel一样，首先我们要打开Selector；
+            ServerSocketChannel severSocketChannel = ServerSocketChannel.open();
+            //打开服务器的ServerSocketChannel通道
+            serverSocketChannel.configureBlocking(false);
+            //网络通信要使用Seletctor，一定要把ServerSocketChannel设置为无阻塞状态，而文件拷贝是阻塞状态，所以文件拷贝是不能使用Selector。
+            serverSocketChannel.bind(new InetSokcetAddress(port));//服务器ServerSocketChannel与客户机端口进行绑定。
+            serverSocketChannel.register(selector,SelectionKey.OP_ACCEPT);
+            //注册服务器的ServerSocketChannel到Selector，可以理解为Selector开始监听我们的服务器ServerSocketChannel，后面一个参数是Selector监听的事件，是一个interest集合，这里是对Accept感兴趣，如果服务器连接上了客户端，Selector就会监听到。常用的四个interest集合为：
+            //SelectionKey.OP_CONNECT:连接到服务器
+            //SelectionKey.OP_ACCEPT:连接到客户端
+            //SelectionKey.OP_READ:读数据
+            //SelectionKey.OP_WRITE:写数据
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    hashma
+    
+    @Override
+    public void run(){
+        while(true){
+            //同样死循环，才能一直通信
+            try{
+                selector.select();
+                //选择器调用select()方法进行选择，如果你之前注册的事件被监听到了，就会进行下一步，不然就会一直堵塞等待。
+                Set&lt;SelectionKey&gt; selectionKeys = selector.SelectedKeys();
+                //把选择器监听到的interest事件全部放入集合中
+                Iterator&lt;SelectionKey&gt; iter = selectionKeys.iterator();
+                while(iter.hasNext()){
+                    //遍历集合
+                    SelectionKey key = iter.next();
+                    //拿出事件
+                    iter.remove();
+                	//拿了后就要把当前的移除，防止一直囤积在这里进行无用判断
+                    if(key.isValid()){
+                        //如果当前这个事件还是有效的，进行下一个判断
+                        if(key.isAccpetable()){
+                            //如果这个事件是我们监听的连击上了客户机事件
+                            ServerSocketChannel serverSockertChannel=
+                            (ServerSocketChannel)key.channel();
+                            //创建一个对象来接受之前的channel
+                            SocketChannel socketChannel =
+                           	serverSocketChannel.accept();
+                            //把连接上的serverSocketChannel传给服务器的SocketChannel
+                            socketChannel.configureBlocking(false);
+                            //把服务器的socketCHannel变为非阻塞状态
+                            socketChannel.register(selector,SelectionKey
+                                                   .OP_READ);
+                            //把socketChannel注册到selector,并监听是否读就绪;
+                        }
+                        if（key.isReadable()){
+                            //如果当前这个SocketChannel通道准备好读状态后
+                            readBuffer.clear();//先重置我们的读缓存区
+                            //保证后面读的数据完全是这次读取产生的
+                           SocketChannel sockCahnnel =(Socketchannel)key.channel;
+                       		//创建一个对象来代表我们服务器的channel
+                            int readBytes = socketChannel.read(readBuffer);
+                            if(readBytes&lt;0){
+                                key.channel().close();
+                                key.cancel();
+                                return;//如果我们没接收到数据那就直接退出吧说明客户机没发
+                                //数据到服务器
+                            }
+                            readBuffer.flip();
+                            //不然的话肯定接受到数据，我们就换为读模式来读接受的数据
+                            byte[] buf = new byte[readBuffer.limit()];
+                            readBuffer.get(buf)；
+                            String str = new String(buf).trim();
+                            System.out.println(str);
+                            
+                            byte[] b = new byte[writeBuffer.capacity()];
+                            System.in.read(b,0,b.length);
+                            writeBuffer.put(b);
+                            writeBuffer.flip();
+                            socketChannel.write(writeBuffer);
+                            writeBuffer.clear();
+                        }
+                    }
+                }
+              catch (IOException e) {
+                e.printStackTrace();
+            }  
+            }
+        }
+}
+</code></pre>
+
+<p>Selector完成的服务器就这样了，我的理解也放上去了，可能有点问题，但我觉得这样理解也挺方便，但如果你们有更好的关于selector的理解，也能联系我，我们进行讨论。</p>
+
+<p>这一篇文章就到此结束了，如果喜欢的，可以关注一下，也能联系我进行讨论。</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2019 My New Hugo Site - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

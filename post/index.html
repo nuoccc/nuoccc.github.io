@@ -29,6 +29,27 @@
   <h1 class="list-title">Posts</h1>
   
     <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/selector/">Selector</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2019-07-25">July 25, 2019</time></span>
+
+  </div>
+  <section class="summary">
+    本章内容为：《Selector基础》
+作者：nuoccc
+上一篇文章讲解了关于NIO基础的缓冲区Buffer以及通道Channel，这一篇文章我们主要讲关于选择器Selector的基础以及基于Selector我们进行服务器和客户机通讯。
+Selector 一般称为选择器，当然你也可以翻译为 多路复用器 。它是Java NIO核心组件中的一个，用于检查一个或多个NIO Channel（通道）的状态是否处于可读、可写。如此可以实现单线程管理多个channels,也就是可以管理多个网络链接。
+关于选择器的具体用法我们在代码中来详细使用和讲解。
+按照正常思维创建服务器和客户机模型进行通讯一般是先创造服务器，而我觉得先创造客户机更能帮助我们理解这个通讯过程，不先创造客户机，你服务器怎么知道我客户机进行的操作，所以我的思想就是先解决客户机，先把“我”的需求写出来后，在用服务器去满足“我”的需求。
+所以我们这次一样的先创建一个客户机，但是Selector其实并不用于客户机，只是用于服务器来选择跟哪个通道进行选择，所以我们客户机的代码就用Channel的客户机代码即可，这里快速写出来。
+public class ChannelClient{ public static void main(String args[]){ Thread th = new Thread(new Client(&quot;127.0.0.1&quot;,8888));//这次我们创建线程来完成通讯	th.start(); } } class Client implements Runnable{ //创建一个线程 private SocketChannel socketChannel;//创建一个SocketChannel对象 private ByteBuffer readBuffer = ByteBuffer.allocate(1024);//开辟一个1k的字节读缓存区 private ByteBuffer writeBuffer = ByteBuffer.allocate(1024);//开辟一个1k的字节写缓存区 private String hostname; private int port; public Client (String hostname,int port){ this.hostname = hostname; this.port = port; } @Override public void run(){ //重写run方法 把我们要进行的主要步骤放里面 try{ socketChannel = SocketChannel.  <a href="/post/selector/">Read More...</a>
+  </section>
+</article>
+
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
   <h2 class="headline" itemprop="headline"><a href="/post/nio/">Nio</a></h2>
   <div class="meta">
 
@@ -62,29 +83,6 @@ URL url = new URL(&quot;http://localhsot:8080/test/dream.jpg&quot;)； //这里�
 HttpURLConnection urlConn= (HttpURLConnection)url.openConnection(); //由于url.openConnection()返回的是一个URL对象所以我们必须要转化为子类HttpURLConnection才能接受。  然后进行一些相关属性的设置，熟练就行
 urlConn.setConnectTimeout(5000);//设置连接的超时时间. urlConn.setReadTimeout(5000);//设置读取数据的超时时间 urlConn.setDoInput(true);//设置允许进行读操作 urlConn.setDoOutput(true);//设置允许进行写操作 urlConn.setRequestMethod(&quot;GET&quot;);//设置请求方式，http协议中指定提交方法有两种请求方式， 一个是GET,一个是POST；这里我们用默认的GET，具体差距这里不讨论  设置完属性后就可以从服务器下载数据了，但是我们还是要确认一下服务器是否响应成功
 //首先创立一个接受码来获取服务器响应的状态码 int responseCode = urlConn.getResponseCode(); //然后进行判断是否跟系统的正确状态码相同 if(responseCode==HttpURLConnection.HTTP_OK){ //相同后我们就可以下载服务器数据了 //创建一个输入流来获取服务器的输入流 InputStream in = urlConn.getInputStream(); BufferedInputStream bis = new BufferedInputStream(in); //然后在创建一个输出流来读输入流 FileOutputStream fos = new FileOutputStream(new File(E:/test/test.png)); BufferedOutputStream bos = new BufferedOutputStream(fos); byte[] buf = new byte[1024]; int len = 0; while((len=bis.  <a href="/post/http/">Read More...</a>
-  </section>
-</article>
-
-  
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/netcommution/">TcpSocket</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2019-07-22">July 22, 2019</time></span>
-
-  </div>
-  <section class="summary">
-    本章内容为：《基于tcp完成Socket通信基础》
-作者：nuoccc 首先我们来了解一下什么是TCP和UDP协议：  TCP协议：有连接协议，需要建立三次握手连接后才通讯，可以可靠的通讯，还可以处理数据出错的问题，因为有这些机制，所以通讯效率略低，但通讯是最可靠的。 Tcp实现的Socket通信是基于TCP三次握手，下面是TCP三次握手的流程图：  基于Tcp三次握手，改进为客户机和服务器进行Socket通信，于是可以变为下图:
-我们基于这个图来完成对Socket通信的编程: 首先我们需要创建一个对象对客户机端口进行监听:
- ServerSocket serverSocket = new ServerSocket(8888);//里面放端口号，端口号一定要跟客户机通信端口一致 
-这里我们要了解什么是端口号，端口号可以这样理解: 因为我们一台电脑对应一个ip地址，如果只有一个ip地址我们的应用也会只是单一的，但我们电脑现在都是多任务系统，同时有多个应用会进行通信，于是产生了端口号来解决这个问题，实现多通信。数据的发送和接收都需要通过端口出入计算机，端口号用于唯一标识通信实体上进行网络通讯的程序，同一台机器上不能两个程序占用同一个端口。了解完端口号，我们继续来说程序。 然后创立一个Socket 对象来完成连接
- Socket socket = serverSocket.accept(); 
-完成好连接后就能进行数据的读写操作，我们用一个线程来完成这个步骤
- SockertThread th = new SocketThread(socket); 
-然后创立好相应的线程类
-class SocketThread extends Thread{ private Socket socket; public SocketThread(){ } public SocketThread(Socket socket){ this.socket=socket; } @Override public void run(){ try{ InputStream in = socket.getInputStream();//获取当前对象socket来获取客户机的输入流 byte[] b = new byte[1024]; in.read(b)//这里假设数据小于1024，一次读完，也可以用while来读数据 String info = new String(b);//创建一个字符串来接受获得的信息 System.  <a href="/post/netcommution/">Read More...</a>
   </section>
 </article>
 

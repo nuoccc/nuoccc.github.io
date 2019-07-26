@@ -6,10 +6,26 @@
     <description>Recent content on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 24 Jul 2019 16:02:33 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 25 Jul 2019 17:11:09 +0800</lastBuildDate>
     
 	<atom:link href="https://nuoccc.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Selector</title>
+      <link>https://nuoccc.github.io/post/selector/</link>
+      <pubDate>Thu, 25 Jul 2019 17:11:09 +0800</pubDate>
+      
+      <guid>https://nuoccc.github.io/post/selector/</guid>
+      <description>本章内容为：《Selector基础》
+作者：nuoccc
+上一篇文章讲解了关于NIO基础的缓冲区Buffer以及通道Channel，这一篇文章我们主要讲关于选择器Selector的基础以及基于Selector我们进行服务器和客户机通讯。
+Selector 一般称为选择器，当然你也可以翻译为 多路复用器 。它是Java NIO核心组件中的一个，用于检查一个或多个NIO Channel（通道）的状态是否处于可读、可写。如此可以实现单线程管理多个channels,也就是可以管理多个网络链接。
+关于选择器的具体用法我们在代码中来详细使用和讲解。
+按照正常思维创建服务器和客户机模型进行通讯一般是先创造服务器，而我觉得先创造客户机更能帮助我们理解这个通讯过程，不先创造客户机，你服务器怎么知道我客户机进行的操作，所以我的思想就是先解决客户机，先把“我”的需求写出来后，在用服务器去满足“我”的需求。
+所以我们这次一样的先创建一个客户机，但是Selector其实并不用于客户机，只是用于服务器来选择跟哪个通道进行选择，所以我们客户机的代码就用Channel的客户机代码即可，这里快速写出来。
+public class ChannelClient{ public static void main(String args[]){ Thread th = new Thread(new Client(&amp;quot;127.0.0.1&amp;quot;,8888));//这次我们创建线程来完成通讯	th.start(); } } class Client implements Runnable{ //创建一个线程 private SocketChannel socketChannel;//创建一个SocketChannel对象 private ByteBuffer readBuffer = ByteBuffer.allocate(1024);//开辟一个1k的字节读缓存区 private ByteBuffer writeBuffer = ByteBuffer.allocate(1024);//开辟一个1k的字节写缓存区 private String hostname; private int port; public Client (String hostname,int port){ this.hostname = hostname; this.port = port; } @Override public void run(){ //重写run方法 把我们要进行的主要步骤放里面 try{ socketChannel = SocketChannel.</description>
+    </item>
     
     <item>
       <title>Nio</title>
