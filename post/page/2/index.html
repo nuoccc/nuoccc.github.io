@@ -29,6 +29,26 @@
   <h1 class="list-title">Posts</h1>
   
     <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/http/">HttpAndUdpSocket</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2019-07-23">July 23, 2019</time></span>
+
+  </div>
+  <section class="summary">
+    本章内容为：《Http和UDP完成Socket通信基础》
+作者：nuoccc 首先我们来了解一下什么是http以及它的工作原理 以下是百度百科关于http的说法:  HTTP是一个简单的请求-响应协议，它通常运行在TCP之上。它指定了客户端可能发送给服务器什么样的消息以及得到什么样的响应。请求和响应消息的头以ASCII码形式给出；而消息内容则具有一个类似MIME的格式。
+ HTTP是基于客户/服务器模式，且面向连接的。典型的HTTP事务处理有如下的过程： （1）客户与服务器建立连接； （2）客户向服务器提出请求； （3）服务器接受请求，并根据请求返回相应的文件作为应答； （4）客户与服务器关闭连接。 大概的模型就像下图这样：   知道了工作原理，我们就通过工作原理来进行http的通讯编程。 首先我们先创立一个URL对象
+URL url = new URL(&quot;http://localhsot:8080/test/dream.jpg&quot;)； //这里我用的是TOMCAT服务器，所以基础地址是localhost,端口号是8080， 后面是TOMCAT下的webapps下创建的test文件夹里面的dream图片  然后我们创建一个HttpURLconnection对象来获取url的连接
+HttpURLConnection urlConn= (HttpURLConnection)url.openConnection(); //由于url.openConnection()返回的是一个URL对象所以我们必须要转化为子类HttpURLConnection才能接受。  然后进行一些相关属性的设置，熟练就行
+urlConn.setConnectTimeout(5000);//设置连接的超时时间. urlConn.setReadTimeout(5000);//设置读取数据的超时时间 urlConn.setDoInput(true);//设置允许进行读操作 urlConn.setDoOutput(true);//设置允许进行写操作 urlConn.setRequestMethod(&quot;GET&quot;);//设置请求方式，http协议中指定提交方法有两种请求方式， 一个是GET,一个是POST；这里我们用默认的GET，具体差距这里不讨论  设置完属性后就可以从服务器下载数据了，但是我们还是要确认一下服务器是否响应成功
+//首先创立一个接受码来获取服务器响应的状态码 int responseCode = urlConn.getResponseCode(); //然后进行判断是否跟系统的正确状态码相同 if(responseCode==HttpURLConnection.HTTP_OK){ //相同后我们就可以下载服务器数据了 //创建一个输入流来获取服务器的输入流 InputStream in = urlConn.getInputStream(); BufferedInputStream bis = new BufferedInputStream(in); //然后在创建一个输出流来读输入流 FileOutputStream fos = new FileOutputStream(new File(E:/test/test.png)); BufferedOutputStream bos = new BufferedOutputStream(fos); byte[] buf = new byte[1024]; int len = 0; while((len=bis.  <a href="/post/http/">Read More...</a>
+  </section>
+</article>
+
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
   <h2 class="headline" itemprop="headline"><a href="/post/netcommution/">TcpSocket</a></h2>
   <div class="meta">
 
@@ -74,32 +94,6 @@ class sonThread extends Thread { //会叫你重写一个run()方法，具体的�
 </article>
 
   
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/file/">关于File类基础以及遍历所有电脑文件</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2019-07-16">July 16, 2019</time></span>
-
-  </div>
-  <section class="summary">
-    本章内容为：《关于File类基础以及遍历所有电脑文件》 作者：nuoccc
-java.io
-类 File
-java.lang.Object
-继承者 java.io.File
-所有已实现的接口：
-Serializable, Comparable
-以上是 jdk 关于 File的 视图
-我们学习File类 就从提供的api入手
-构造器  首先File重写了四个构造方法 但这里之列举出我们最常用的两个构造方法 第一个File(File parent,String child);// 这个是通过父路径 以及子路径创建一个路径 第二个File(String pathname);//直接传入一个路径
- 关于两种构造方法的实际应用具体如下：
-1 File file = new File(&quot;D:/&quot;,&quot;testFile.txt&quot;); //创建一个路劲为D:/testFile.txt 的路径 2 File file2 = new File(&quot;D:/testFile2.txt&quot;); //创建一个路劲为D:/testFile2.txt 的路径   exists()  用exists()来判断文件是否存在；返回一个boolean值 存在返回true 不存在 返回 false。 exists()一般用来判断文件是否存在 不存在则创立一个新文件。 例如:
-File file3 = new File(&quot;D:/testFile3.txt&quot;); if(!file3.exists()){//如果文件不存在则创建并提示创建成功，否则代表文件存在 file3.creatNewFile();//文件创建的方法 creatNewFile() System.out.println(&quot;文件创建成功！&quot;); }else{ System.  <a href="/post/file/">Read More...</a>
-  </section>
-</article>
-
-  
 </main>
 
   <nav class="paginator">
@@ -107,10 +101,10 @@ File file3 = new File(&quot;D:/testFile3.txt&quot;); if(!file3.exists()){//如�
     <a class="nav-left" href="/post/">&lt; Prev</a>
     
 
-    <span>2 / 2</span>
+    <span>2 / 3</span>
 
     
-    <span class="nav-right faded">Next &gt;</span>
+    <a class="nav-right" href="/post/page/3/">Next &gt;</a>
     
   </nav>
 

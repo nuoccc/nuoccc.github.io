@@ -29,6 +29,35 @@
   <h1 class="list-title">Posts</h1>
   
     <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/html/">Html</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2019-07-29">July 29, 2019</time></span>
+
+  </div>
+  <section class="summary">
+    本章内容为：《HTML基础与使用各种标签》
+作者：nuoccc 1丶首先我们来了解一下什么是HTML；  HTML全称为:Hyper Text Markup Language,翻译为中文就是超文本标记语言。 超文本:除了可以包含文本，还可以包含图片，声音，视频等等资源 标记:HTML文档的元素是以标签对的形式出现的。  2丶介绍完HTML，我们来看看HTML的整体结构：  HTML文件的后缀名为.html
+ &lt;!DOCTYPE html&gt; 指当前的HTML文档使用的HTML规范&lt;/!doctype&gt;
+ HTML的语法：&lt;标签&gt;&lt;/标签&gt;
+ 属性:&lt;标签 属于1=值1 属性2=值2&hellip;.&gt;&lt;/标签&gt;,属性与属性之间可以空格隔开
+ HTML的标签可以嵌套
+ 根标签，HTML文档起源的地方，lang属性告诉搜索引擎，这个页面是关于&rdquo;en&rdquo;英文的页面
+ 头标签，包含了标签，还可以包含其他的标签，比如引入外部的css样式，外部的javascrpit代码等等
+ 为自然结束标签，其中属性charset为指定的字符编码 告诉搜索引擎这是该页面的关键字
+告诉搜索引擎这是该页面的描述
+ HTML基础及标签使用HTML页面的标题
+ 主体，指整个HTML文档
+  3丶常用标签使用方式 1）块级标(block element)：独占一行，可以设置宽高  &lt;div&gt;&lt;/div&gt; 分块标签，例:&lt;div&gt;测试&lt;/div&gt; &lt;div&gt;测试&lt;/div&gt; 看一下输出图:   &lt;center&gt;&lt;/center&gt; 例如：&lt;center&gt;测试居中&lt;/center&gt;  看一下输出图
+ h1~h6：标题标签 例如：&lt;h1&gt;一号标签&lt;/h1&gt;&lt;h2&gt;二号标签&lt;/h2&gt;&lt;h3&gt;三号标签&lt;/h3&gt;&lt;h4&gt;四号标签&lt;/h4&gt;&lt;h5&gt;五号标签&lt;/h5&gt;&lt;h6&gt;六号标签&lt;/h6&gt;  看一下输出图:
+ &lt;ol&gt;-&lt;li&gt;: 有序列表 ，ol：ordered lists有序列表，li：list item列表项，有序列表可以包含多个li，例如:&lt;ol&gt;&lt;li&gt;一号列表&lt;/li&gt;&lt;li&gt;二号列表&lt;/li&gt;&lt;/ol&gt;  看下输出图
+ &lt;ul&gt;-&lt;li&gt;:无序列表， ul：unordered lists，li：list item列表项，无序列表可以包含多个li，例如：&lt;ur&gt;&lt;li&gt;一号列表&lt;/li&gt;&lt;li&gt;二号列表&lt;/li&gt;&lt;/ur&gt;  看下输出图：  <a href="/post/html/">Read More...</a>
+  </section>
+</article>
+
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
   <h2 class="headline" itemprop="headline"><a href="/post/selector/">Selector</a></h2>
   <div class="meta">
 
@@ -67,26 +96,6 @@ InBuffer buffer = InBuffer.allocate(8);//我们先开辟一个长度为8的整�
 </article>
 
   
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/http/">HttpAndUdpSocket</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2019-07-23">July 23, 2019</time></span>
-
-  </div>
-  <section class="summary">
-    本章内容为：《Http和UDP完成Socket通信基础》
-作者：nuoccc 首先我们来了解一下什么是http以及它的工作原理 以下是百度百科关于http的说法:  HTTP是一个简单的请求-响应协议，它通常运行在TCP之上。它指定了客户端可能发送给服务器什么样的消息以及得到什么样的响应。请求和响应消息的头以ASCII码形式给出；而消息内容则具有一个类似MIME的格式。
- HTTP是基于客户/服务器模式，且面向连接的。典型的HTTP事务处理有如下的过程： （1）客户与服务器建立连接； （2）客户向服务器提出请求； （3）服务器接受请求，并根据请求返回相应的文件作为应答； （4）客户与服务器关闭连接。 大概的模型就像下图这样：   知道了工作原理，我们就通过工作原理来进行http的通讯编程。 首先我们先创立一个URL对象
-URL url = new URL(&quot;http://localhsot:8080/test/dream.jpg&quot;)； //这里我用的是TOMCAT服务器，所以基础地址是localhost,端口号是8080， 后面是TOMCAT下的webapps下创建的test文件夹里面的dream图片  然后我们创建一个HttpURLconnection对象来获取url的连接
-HttpURLConnection urlConn= (HttpURLConnection)url.openConnection(); //由于url.openConnection()返回的是一个URL对象所以我们必须要转化为子类HttpURLConnection才能接受。  然后进行一些相关属性的设置，熟练就行
-urlConn.setConnectTimeout(5000);//设置连接的超时时间. urlConn.setReadTimeout(5000);//设置读取数据的超时时间 urlConn.setDoInput(true);//设置允许进行读操作 urlConn.setDoOutput(true);//设置允许进行写操作 urlConn.setRequestMethod(&quot;GET&quot;);//设置请求方式，http协议中指定提交方法有两种请求方式， 一个是GET,一个是POST；这里我们用默认的GET，具体差距这里不讨论  设置完属性后就可以从服务器下载数据了，但是我们还是要确认一下服务器是否响应成功
-//首先创立一个接受码来获取服务器响应的状态码 int responseCode = urlConn.getResponseCode(); //然后进行判断是否跟系统的正确状态码相同 if(responseCode==HttpURLConnection.HTTP_OK){ //相同后我们就可以下载服务器数据了 //创建一个输入流来获取服务器的输入流 InputStream in = urlConn.getInputStream(); BufferedInputStream bis = new BufferedInputStream(in); //然后在创建一个输出流来读输入流 FileOutputStream fos = new FileOutputStream(new File(E:/test/test.png)); BufferedOutputStream bos = new BufferedOutputStream(fos); byte[] buf = new byte[1024]; int len = 0; while((len=bis.  <a href="/post/http/">Read More...</a>
-  </section>
-</article>
-
-  
 </main>
 
   <nav class="paginator">
@@ -94,7 +103,7 @@ urlConn.setConnectTimeout(5000);//设置连接的超时时间. urlConn.setReadTi
     <span class="nav-left faded">&lt; Prev</span>
     
 
-    <span>1 / 2</span>
+    <span>1 / 3</span>
 
     
     <a class="nav-right" href="/post/page/2/">Next &gt;</a>

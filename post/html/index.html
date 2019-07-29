@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="generator" content="Hugo 0.55.6" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="My New Hugo Site">
+<title>Html - My New Hugo Site</title>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="https://nuoccc.github.io/">[My New Hugo Site]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2019-07-29">July 29, 2019</time></span>
+
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">Html</h1>
+  <section class="body" itemprop="articleBody">
+    
+
+<p>本章内容为：《HTML基础与使用各种标签》</p>
+
+<h2 id="作者-nuoccc">作者：nuoccc</h2>
+
+<h3 id="1丶首先我们来了解一下什么是html">1丶首先我们来了解一下什么是HTML；</h3>
+
+<ul>
+<li>HTML全称为:Hyper Text Markup Language,翻译为中文就是超文本标记语言。</li>
+<li>超文本:除了可以包含文本，还可以包含图片，声音，视频等等资源</li>
+<li>标记:HTML文档的元素是以标签对的形式出现的。</li>
+</ul>
+
+<h3 id="2丶介绍完html-我们来看看html的整体结构">2丶介绍完HTML，我们来看看HTML的整体结构：</h3>
+
+<ul>
+<li><p>HTML文件的后缀名为.html</p></li>
+
+<li><p>&lt;!DOCTYPE html&gt; 指当前的HTML文档使用的HTML规范&lt;/!doctype&gt;</p></li>
+
+<li><p>HTML的语法：&lt;标签&gt;&lt;/标签&gt;</p></li>
+
+<li><p>属性:&lt;标签 属于1=值1 属性2=值2&hellip;.&gt;&lt;/标签&gt;,属性与属性之间可以空格隔开</p></li>
+
+<li><p>HTML的标签可以嵌套</p></li>
+
+<li><p><html lang="en">根标签，HTML文档起源的地方，lang属性告诉搜索引擎，这个页面是关于&rdquo;en&rdquo;英文的页面</html></p></li>
+
+<li><p><head>头标签，包含了<title>标签，还可以包含其他的标签，比如引入外部的css样式，外部的javascrpit代码等等</head></p></li>
+
+<li><p><meta charset="UTF-8"><meta>为自然结束标签，其中属性charset为指定的字符编码
+<meta http-equiv="keywords"content="">告诉搜索引擎这是该页面的关键字<br />
+<meta http-equiv="description" content="">告诉搜索引擎这是该页面的描述</p></li>
+
+<li><p><title>HTML基础及标签使用</title>HTML页面的标题</p></li>
+
+<li><p><body>主体，指整个HTML文档</body></p></li>
+</ul>
+
+<h3 id="3丶常用标签使用方式">3丶常用标签使用方式</h3>
+
+<h4 id="1-块级标-block-element-独占一行-可以设置宽高">1）块级标(block element)：独占一行，可以设置宽高</h4>
+
+<ul>
+<li><code>&lt;div&gt;&lt;/div&gt; 分块标签，例:&lt;div&gt;测试&lt;/div&gt; &lt;div&gt;测试&lt;/div&gt;</code>
+看一下输出图:</li>
+</ul>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-e46d68ccf74d16e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html1.png" /></p>
+
+<ul>
+<li><code>&lt;center&gt;&lt;/center&gt; 例如：&lt;center&gt;测试居中&lt;/center&gt;</code></li>
+</ul>
+
+<p>看一下输出图</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-b67727f04fed31b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html2.png" /></p>
+
+<ul>
+<li><code>h1~h6：标题标签 例如：&lt;h1&gt;一号标签&lt;/h1&gt;&lt;h2&gt;二号标签&lt;/h2&gt;&lt;h3&gt;三号标签&lt;/h3&gt;&lt;h4&gt;四号标签&lt;/h4&gt;&lt;h5&gt;五号标签&lt;/h5&gt;&lt;h6&gt;六号标签&lt;/h6&gt;</code></li>
+</ul>
+
+<p>看一下输出图:</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-58476f35e54dc1a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html3.png" /></p>
+
+<ul>
+<li><code>&lt;ol&gt;-&lt;li&gt;: 有序列表 ，ol：ordered lists有序列表，li：list item列表项，有序列表可以包含多个li，例如:&lt;ol&gt;&lt;li&gt;一号列表&lt;/li&gt;&lt;li&gt;二号列表&lt;/li&gt;&lt;/ol&gt;</code></li>
+</ul>
+
+<p>看下输出图</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-cb7b6dc4d25918c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html4.png" /></p>
+
+<ul>
+<li><code>&lt;ul&gt;-&lt;li&gt;:无序列表， ul：unordered lists，li：list item列表项，无序列表可以包含多个li，例如：&lt;ur&gt;&lt;li&gt;一号列表&lt;/li&gt;&lt;li&gt;二号列表&lt;/li&gt;&lt;/ur&gt;</code></li>
+</ul>
+
+<p>看下输出图：</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-4778e8394ef3dc86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html5.png" /></p>
+
+<ul>
+<li><p>p&gt;</p>：段落标签，paragraph</p></li>
+
+<li><p>pre&gt;</pre>:格式化文本，通常用于包含代码</p></li>
+
+<li><p>fieldset&gt;&ndash;legend&gt;:设置分组，legend&gt;表示分组的名称</p></li>
+
+<li><p>table&gt;&ndash;<tr>&ndash;<td>  table&gt;</table>:表格标签 <tr>:table row，表格的行,<td>:table data cell，表格的单元格 ，border属性：表格的边框的像素值 cellspacing：单元格的间距 cellpadding：单元格的内边距， 例如：</p></li>
+</ul>
+
+<p>table border=&ldquo;1&rdquo; cellspacing=&ldquo;0&rdquo; cellpadding=&ldquo;0&rdquo;
+      tr&gt;
+         td&gt;1</td>
+         td&gt;2</td>
+         td&gt;3</td>
+      /tr&gt;
+      tr&gt;
+         td&gt;4</td>
+         td&gt;5</td>
+         td&gt;6</td>
+      /tr&gt;
+  table</p>
+
+<p>​   看下输出图:</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-e60b009a1069333d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html6.png" /></p>
+
+<ul>
+<li>hr:水平分割线</li>
+</ul>
+
+<h4 id="2-行级标签-inline-element-所有元素排在一行-不能设置宽高-高度随着内容的大小变化">2）行级标签(inline element)：所有元素排在一行，不能设置宽高，高度随着内容的大小变化。</h4>
+
+<ul>
+<li><p>span&gt;:行级实现特殊功能标签</p></li>
+
+<li><p>font&gt;:设置字体 例如：font face=&ldquo;隶书&rdquo;&gt;这是字体</font>font face=&ldquo;微软雅黑&rdquo;&gt;这是字体</font></p></li>
+</ul>
+
+<p>看下输出打印:</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-ed668ae2b4e8e6d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html7.png" /></p>
+
+<ul>
+<li>del&gt;加删除线</li>
+</ul>
+
+<p>例如：del&gt;删除</del></p>
+
+<p>看下输出打印：</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-728ae66221d6bcce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html8.png" /></p>
+
+<ul>
+<li><code>&lt;a&gt;超链接标签(锚点标签)，放在该标签内的内容可以是文本，也可以是图片等，例如：&lt;a href=&quot;www.baidu.com&quot;&gt;点击跳转百度&lt;/a&gt;</code></li>
+</ul>
+
+<p>看下打印输出:</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-1e2ddfe26724498f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html9.png" /></p>
+
+<ul>
+<li>br：换行</li>
+<li>b&gt;粗体
+big&gt;大字体
+em&gt;强调
+strong&gt;粗体强调
+i&gt;斜体
+sub：下标
+sup：上标                                                                                                                                                                           这些全部放一起来看看效果：</li>
+<li><img src="https://upload-images.jianshu.io/upload_images/18881335-802d4204aa20f27e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html10.png" /></li>
+</ul>
+
+<h4 id="3-行级块级标签-inline-block-element-所有元素排在一行-但是可以设置宽高">3) 行级块级标签(inline-block element):所有元素排在一行，但是可以设置宽高</h4>
+
+<ul>
+<li>img&gt;：图片标签，属性：src&ndash;要显示的图片的位置，alt&ndash;如果图片不能正常显示，给出的提示信息,width&mdash;图片宽度，height&ndash;图片高度</li>
+</ul>
+
+<p>例如：img src=&ldquo;img/chuangwei.jpg&rdquo; alt=&ldquo;失败&rdquo;,width=&ldquo;200&rdquo;,height=&ldquo;200&rdquo;&gt;</p>
+
+<p>看下输出打印:</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-c456df5825644af3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html11.png" /></p>
+
+<h4 id="4-转义字符">4）转义字符</h4>
+
+<p>&amp;+nbsp;  空格
+&amp;+lt; less than,小于 &lt;
+&amp;+gt; great than,大于 &gt;
+&amp;+amp; 与符号,&rdquo;&amp;&rdquo;
+&amp;+quot; 引号,&rdquo;
+&amp;+reg; 已注册
+&amp;+copy; 版权
+&amp;+trade; 商标</p>
+
+<p>我们直接来看下打印输出:</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-32ed5fe3b6475dd9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html12.png" /></p>
+
+<h4 id="5-表单">5）表单</h4>
+
+<p>form</form> ：表单，是块级标签</p>
+
+<p>action:指明处理该表单数据的后台服务器组件的地址
+method:请求的方式，分为get方式和post方式
+get:会将表单中填写的内容附加在请求的URL地址后面传递给服务器，只能传少量的数据
+post:会将表单中的内容添加在Form-data中传递给服务器，安全性高，可以传送大量数据，理论上传送的数据无大小限制
+enctype:设置表单的类型
+application/x-www-form-urlencoded：普通表单，默认值
+multipart/form-data:包含文件上传的复合表单</p>
+
+<ul>
+<li>input type=&ldquo;&rdquo;,name=&ldquo;&rdquo;&gt;type:text单行文本输入框,name为它的名称
+例如：</li>
+</ul>
+
+<p>input type=&ldquo;text&rdquo; name=&ldquo;name&rdquo;&gt;</p>
+
+<p>看下输出打印：</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-071d57967d0aaec1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html13.png" /></p>
+
+<ul>
+<li>input type=&ldquo;&rdquo;,name=&ldquo;&rdquo;&gt;type:password,密码输入框
+例如：
+label&gt;密码：</label><input type="password" name="pwd"></li>
+</ul>
+
+<p>看下输出打印：</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-557f4e72ba310f62.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html14.png" /></p>
+
+<ul>
+<li><p>input type=&ldquo;&rdquo;,value=&ldquo;&rdquo;,checked=&ldquo;&rdquo;&gt;type:radio:单选按钮，value:表单元素的值，checked:为默认选中该按钮
+例如：</p>
+
+<pre><code>input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;boy&quot; checked=&quot;checked&quot;&gt;男
+input type=&quot;radio&quot; name=&quot;sex&quot; value=&quot;girl&quot;&gt;女
+</code></pre></li>
+</ul>
+
+<p>​       看下输出打印：</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-9ff226fc8d53ad93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html15.png" /></p>
+
+<ul>
+<li><p>input type=&ldquo;&rdquo;,value=&ldquo;&rdquo;,checked=&ldquo;&rdquo;&gt;type:checkbox:单选按钮，value:表单元素的值
+例如：</p>
+
+<pre><code>input type=&quot;checkbox&quot; name=&quot;hobby&quot; value=&quot;music&quot;&gt;音乐
+input type=&quot;checkbox&quot; name=&quot;hobby&quot; value=&quot;sports&quot;&gt;运动
+input type=&quot;checkbox&quot; name=&quot;hobby&quot; value=&quot;tour&quot;&gt;旅游
+</code></pre></li>
+</ul>
+
+<p>​       看下输出打印：</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-bdb77b6af0220799.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html16.png" /></p>
+
+<ul>
+<li><p>select&gt;下拉组合框，<option>表示每一个选择项，value表示选项的值
+例如：</p>
+
+<pre><code>select name=&quot;city&quot;&gt;
+    &lt;option value=&quot;cd&quot;&gt;成都&lt;/option&gt;
+    &lt;option value=&quot;cq&quot;&gt;重庆&lt;/option&gt;
+    &lt;option value=&quot;bj&quot;&gt;北京&lt;/option&gt;
+&lt;/select&gt;
+</code></pre></li>
+</ul>
+
+<p>​       看下输出打印：</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-eb21675b172d031c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html17.png" /></p>
+
+<p>​<br />
+* textarea多行文本，cols:包含多少列，rows:包含多少
+  例如：
+  textarea name=&ldquo;intro&rdquo; id=&ldquo;&rdquo; cols=&ldquo;30&rdquo; rows=&ldquo;10&rdquo;&gt;</textarea></p>
+
+<p>看下输出打印：</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-2947e591c2a310cf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html18.png" /></p>
+
+<ul>
+<li>input type=&ldquo;&rdquo; name=&ldquo;&rdquo; value=&ldquo;&rdquo;&gt; type:hidden:隐藏域，不会显示在页面上，但其数据会提交给服务器
+例如：
+input type=&ldquo;hidden&rdquo; name=&ldquo;id&rdquo; value=&ldquo;100&rdquo;&gt;</li>
+</ul>
+
+<p>input type=&ldquo;&rdquo; value=&ldquo;提交&rdquo;&gt;type=submit,提交按钮，value指明该提交按钮上显示的文字，该提交按钮会将用户填写的数据提交到服务器后台，即action属性指明的地址。
+  例如:
+  input type=&ldquo;submit&rdquo; value=&ldquo;提交&rdquo;&gt;</p>
+
+<p>input type=&ldquo;&rdquo; value=&ldquo;重置&rdquo;&gt; type:reset
+  例如:
+  input type=&ldquo;reset&rdquo; value=&ldquo;重置&rdquo;&gt;</p>
+
+<p>看下两个按键的输出打印：</p>
+
+<p><img src="https://upload-images.jianshu.io/upload_images/18881335-cc623f28375c369c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="html19.png" /></p>
+
+<p>HTML基础就这些了,其实以上大部分属性和标签已经用不到了，已经被css取代，但是也可以了解一下。</p>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2019 My New Hugo Site - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+

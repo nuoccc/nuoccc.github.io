@@ -6,10 +6,34 @@
     <description>Recent content on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 25 Jul 2019 17:11:09 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 29 Jul 2019 15:47:30 +0800</lastBuildDate>
     
 	<atom:link href="https://nuoccc.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Html</title>
+      <link>https://nuoccc.github.io/post/html/</link>
+      <pubDate>Mon, 29 Jul 2019 15:47:30 +0800</pubDate>
+      
+      <guid>https://nuoccc.github.io/post/html/</guid>
+      <description>本章内容为：《HTML基础与使用各种标签》
+作者：nuoccc 1丶首先我们来了解一下什么是HTML；  HTML全称为:Hyper Text Markup Language,翻译为中文就是超文本标记语言。 超文本:除了可以包含文本，还可以包含图片，声音，视频等等资源 标记:HTML文档的元素是以标签对的形式出现的。  2丶介绍完HTML，我们来看看HTML的整体结构：  HTML文件的后缀名为.html
+ &amp;lt;!DOCTYPE html&amp;gt; 指当前的HTML文档使用的HTML规范&amp;lt;/!doctype&amp;gt;
+ HTML的语法：&amp;lt;标签&amp;gt;&amp;lt;/标签&amp;gt;
+ 属性:&amp;lt;标签 属于1=值1 属性2=值2&amp;hellip;.&amp;gt;&amp;lt;/标签&amp;gt;,属性与属性之间可以空格隔开
+ HTML的标签可以嵌套
+ 根标签，HTML文档起源的地方，lang属性告诉搜索引擎，这个页面是关于&amp;rdquo;en&amp;rdquo;英文的页面
+ 头标签，包含了标签，还可以包含其他的标签，比如引入外部的css样式，外部的javascrpit代码等等
+ 为自然结束标签，其中属性charset为指定的字符编码 告诉搜索引擎这是该页面的关键字
+告诉搜索引擎这是该页面的描述
+ HTML基础及标签使用HTML页面的标题
+ 主体，指整个HTML文档
+  3丶常用标签使用方式 1）块级标(block element)：独占一行，可以设置宽高  &amp;lt;div&amp;gt;&amp;lt;/div&amp;gt; 分块标签，例:&amp;lt;div&amp;gt;测试&amp;lt;/div&amp;gt; &amp;lt;div&amp;gt;测试&amp;lt;/div&amp;gt; 看一下输出图:   &amp;lt;center&amp;gt;&amp;lt;/center&amp;gt; 例如：&amp;lt;center&amp;gt;测试居中&amp;lt;/center&amp;gt;  看一下输出图
+ h1~h6：标题标签 例如：&amp;lt;h1&amp;gt;一号标签&amp;lt;/h1&amp;gt;&amp;lt;h2&amp;gt;二号标签&amp;lt;/h2&amp;gt;&amp;lt;h3&amp;gt;三号标签&amp;lt;/h3&amp;gt;&amp;lt;h4&amp;gt;四号标签&amp;lt;/h4&amp;gt;&amp;lt;h5&amp;gt;五号标签&amp;lt;/h5&amp;gt;&amp;lt;h6&amp;gt;六号标签&amp;lt;/h6&amp;gt;  看一下输出图:
+ &amp;lt;ol&amp;gt;-&amp;lt;li&amp;gt;: 有序列表 ，ol：ordered lists有序列表，li：list item列表项，有序列表可以包含多个li，例如:&amp;lt;ol&amp;gt;&amp;lt;li&amp;gt;一号列表&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;二号列表&amp;lt;/li&amp;gt;&amp;lt;/ol&amp;gt;  看下输出图
+ &amp;lt;ul&amp;gt;-&amp;lt;li&amp;gt;:无序列表， ul：unordered lists，li：list item列表项，无序列表可以包含多个li，例如：&amp;lt;ur&amp;gt;&amp;lt;li&amp;gt;一号列表&amp;lt;/li&amp;gt;&amp;lt;li&amp;gt;二号列表&amp;lt;/li&amp;gt;&amp;lt;/ur&amp;gt;  看下输出图：</description>
+    </item>
     
     <item>
       <title>Selector</title>
