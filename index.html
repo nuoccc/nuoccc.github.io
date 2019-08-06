@@ -49,6 +49,29 @@
   <div class="article-list">
     
       <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/sql/">Sql</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2019-08-06">August 06, 2019</time></span>
+
+  </div>
+  <section class="summary">
+    本章内容为：《SQL基础》
+作者：nuoccc 这篇文章 主要是进行 最基础的SQL语法学习，感兴趣的可以看看。
+首先我们常用的数据库模型就是关系数据库：由一张二维的表构成，表的列表示字段（属性），一行表示其中
+的一条记录。
+然后我们常见的数据库有：
+ Oracle MySql DB2 SQL Server sqlite  SQL语句分类 :
+ DDL（Data Definition Language）：数据定义语言，用来定义数据库对象：库、表、列等。 DML（Data Manipulation Language）：数据操作语言，用来定义数据库记录（数据）。 DCL（Data Control Language）：数据控制语言，用来定义访问权限和安全级别。 DQL（Data Query Language）：数据查询语言，用来查询记录（数据）。  我使用的是MySQL，其他数据库我也我不太了解，所以本篇文章只针对MySQL，其他数据库可能不全部适用。
+一丶 创建数据库表 首先我们来学如果创建数据库表:
+也就是我们SQL语句的DDL,用来定义数据库对象：库、表、列等。
+create database db_name character set utf8 collate uft8_general_ci; -- 创建一个字符集为utf-8的数据库，db_name是你自己要定义的数据库名字 alter database db_name character set gbk; -- 选择数据库 并把字符集改为GBK编码，这里只是告诉这么用 没必要换成GBK drop database db_name; -- 删除数据库,drop 是删除关键字 一定要记住 use db_name; -- 选择你要使用的数据库  数据库的定义学完后，我们选择当前创立的数据库，然后开始添加数据库表  <a href="/post/sql/">Read More...</a>
+  </section>
+</article>
+
+    
+      <article class="list-item" itemscope itemtype="http://schema.org/Blog">
   <h2 class="headline" itemprop="headline"><a href="/post/html/">Html</a></h2>
   <div class="meta">
 
@@ -94,24 +117,6 @@ Selector 一般称为选择器，当然你也可以翻译为 多路复用器 。
 按照正常思维创建服务器和客户机模型进行通讯一般是先创造服务器，而我觉得先创造客户机更能帮助我们理解这个通讯过程，不先创造客户机，你服务器怎么知道我客户机进行的操作，所以我的思想就是先解决客户机，先把“我”的需求写出来后，在用服务器去满足“我”的需求。
 所以我们这次一样的先创建一个客户机，但是Selector其实并不用于客户机，只是用于服务器来选择跟哪个通道进行选择，所以我们客户机的代码就用Channel的客户机代码即可，这里快速写出来。
 public class ChannelClient{ public static void main(String args[]){ Thread th = new Thread(new Client(&quot;127.0.0.1&quot;,8888));//这次我们创建线程来完成通讯	th.start(); } } class Client implements Runnable{ //创建一个线程 private SocketChannel socketChannel;//创建一个SocketChannel对象 private ByteBuffer readBuffer = ByteBuffer.allocate(1024);//开辟一个1k的字节读缓存区 private ByteBuffer writeBuffer = ByteBuffer.allocate(1024);//开辟一个1k的字节写缓存区 private String hostname; private int port; public Client (String hostname,int port){ this.hostname = hostname; this.port = port; } @Override public void run(){ //重写run方法 把我们要进行的主要步骤放里面 try{ socketChannel = SocketChannel.  <a href="/post/selector/">Read More...</a>
-  </section>
-</article>
-
-    
-      <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/nio/">Nio</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2019-07-24">July 24, 2019</time></span>
-
-  </div>
-  <section class="summary">
-    本章内容为：《NIO基础》
-作者：nuoccc 首先我们来了解一下什么是NIO；  NIO全程 Non-block I/O 中文意思就是无阻塞读写流，然后在我们NIO中有三个核心对象需要掌握 缓冲区 （Buffer) 通道 (Channel) 选择器 (Selector) 这篇文章就针对上述这三点进行了解  一丶Buffer Buffer有四个属性：1.capacity 容量 2. limit 上限 3. position 当前位置 4. mark 标记 我们就直接通过一个程序来看看Buffer的API使用方法，以及加强对Buffer的四个属性的理解
-InBuffer buffer = InBuffer.allocate(8);//我们先开辟一个长度为8的整型缓冲区 //buffer的使用本质上就是创建一个数组来进行缓存 for(int i = 0;i&lt;6;i++){ buffer.put(i);//把当前的i放进buffer里面，这时候poition会向后移一位 //position可以理解为栈的栈顶，是在数据的高一位 } buffer.filp();//转化buffer的读写方式，默认为读方式，现在转化为写 while(buff.hasRemaining()){//可以理解为has.next(),判断是否还有数据 int j = buffer.get();//从buffer里面取数据，这里j其实就是buffer每个数据的下标 System.out.print(j+&quot;&quot;)//输出当前j，瞅瞅是否跟我们预期一样 } buffer.clear();//清空缓存区，重新读写 //说是清空，实际上是把当前的position又重新置为0，当put一个数据时，就会重新覆盖原来的数据 for(int i=0;i&lt;buff.capacity();i++){ buffer.put(i); } buffer.flip(); while(buffer.hasReamining()){ int j = buffer.get(); System.out.println(j); }  其实Buffer还是挺好理解的，就是对一个数组进行读和写，但是我们后面的的都是基于buffer运行的。
-二丶Channel 了解完Buffer之后我们来看看Channel(通道),那什么是Channel呢？ 我们首先来看一个图，来看看Channel的作用：
-我们可以看出程序与程序之间数据传递并不是直接传递的，而是先通过Buffer然后再在Channel之间传递 根据上图，我们就可以设计出程序来进行通讯。 常用的Channel实现类有SocketChannel ServerSocketChannel DataGramChannel FileChannel ByteChannel 我们在实际使用中来熟悉Channel的用法  <a href="/post/nio/">Read More...</a>
   </section>
 </article>
 

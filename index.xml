@@ -6,10 +6,28 @@
     <description>Recent content on My New Hugo Site</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 29 Jul 2019 15:47:30 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 06 Aug 2019 17:15:49 +0800</lastBuildDate>
     
 	<atom:link href="https://nuoccc.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Sql</title>
+      <link>https://nuoccc.github.io/post/sql/</link>
+      <pubDate>Tue, 06 Aug 2019 17:15:49 +0800</pubDate>
+      
+      <guid>https://nuoccc.github.io/post/sql/</guid>
+      <description>本章内容为：《SQL基础》
+作者：nuoccc 这篇文章 主要是进行 最基础的SQL语法学习，感兴趣的可以看看。
+首先我们常用的数据库模型就是关系数据库：由一张二维的表构成，表的列表示字段（属性），一行表示其中
+的一条记录。
+然后我们常见的数据库有：
+ Oracle MySql DB2 SQL Server sqlite  SQL语句分类 :
+ DDL（Data Definition Language）：数据定义语言，用来定义数据库对象：库、表、列等。 DML（Data Manipulation Language）：数据操作语言，用来定义数据库记录（数据）。 DCL（Data Control Language）：数据控制语言，用来定义访问权限和安全级别。 DQL（Data Query Language）：数据查询语言，用来查询记录（数据）。  我使用的是MySQL，其他数据库我也我不太了解，所以本篇文章只针对MySQL，其他数据库可能不全部适用。
+一丶 创建数据库表 首先我们来学如果创建数据库表:
+也就是我们SQL语句的DDL,用来定义数据库对象：库、表、列等。
+create database db_name character set utf8 collate uft8_general_ci; -- 创建一个字符集为utf-8的数据库，db_name是你自己要定义的数据库名字 alter database db_name character set gbk; -- 选择数据库 并把字符集改为GBK编码，这里只是告诉这么用 没必要换成GBK drop database db_name; -- 删除数据库,drop 是删除关键字 一定要记住 use db_name; -- 选择你要使用的数据库  数据库的定义学完后，我们选择当前创立的数据库，然后开始添加数据库表</description>
+    </item>
     
     <item>
       <title>Html</title>

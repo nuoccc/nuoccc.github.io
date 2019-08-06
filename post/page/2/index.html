@@ -29,6 +29,24 @@
   <h1 class="list-title">Posts</h1>
   
     <article class="list-item" itemscope itemtype="http://schema.org/Blog">
+  <h2 class="headline" itemprop="headline"><a href="/post/nio/">Nio</a></h2>
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2019-07-24">July 24, 2019</time></span>
+
+  </div>
+  <section class="summary">
+    本章内容为：《NIO基础》
+作者：nuoccc 首先我们来了解一下什么是NIO；  NIO全程 Non-block I/O 中文意思就是无阻塞读写流，然后在我们NIO中有三个核心对象需要掌握 缓冲区 （Buffer) 通道 (Channel) 选择器 (Selector) 这篇文章就针对上述这三点进行了解  一丶Buffer Buffer有四个属性：1.capacity 容量 2. limit 上限 3. position 当前位置 4. mark 标记 我们就直接通过一个程序来看看Buffer的API使用方法，以及加强对Buffer的四个属性的理解
+InBuffer buffer = InBuffer.allocate(8);//我们先开辟一个长度为8的整型缓冲区 //buffer的使用本质上就是创建一个数组来进行缓存 for(int i = 0;i&lt;6;i++){ buffer.put(i);//把当前的i放进buffer里面，这时候poition会向后移一位 //position可以理解为栈的栈顶，是在数据的高一位 } buffer.filp();//转化buffer的读写方式，默认为读方式，现在转化为写 while(buff.hasRemaining()){//可以理解为has.next(),判断是否还有数据 int j = buffer.get();//从buffer里面取数据，这里j其实就是buffer每个数据的下标 System.out.print(j+&quot;&quot;)//输出当前j，瞅瞅是否跟我们预期一样 } buffer.clear();//清空缓存区，重新读写 //说是清空，实际上是把当前的position又重新置为0，当put一个数据时，就会重新覆盖原来的数据 for(int i=0;i&lt;buff.capacity();i++){ buffer.put(i); } buffer.flip(); while(buffer.hasReamining()){ int j = buffer.get(); System.out.println(j); }  其实Buffer还是挺好理解的，就是对一个数组进行读和写，但是我们后面的的都是基于buffer运行的。
+二丶Channel 了解完Buffer之后我们来看看Channel(通道),那什么是Channel呢？ 我们首先来看一个图，来看看Channel的作用：
+我们可以看出程序与程序之间数据传递并不是直接传递的，而是先通过Buffer然后再在Channel之间传递 根据上图，我们就可以设计出程序来进行通讯。 常用的Channel实现类有SocketChannel ServerSocketChannel DataGramChannel FileChannel ByteChannel 我们在实际使用中来熟悉Channel的用法  <a href="/post/nio/">Read More...</a>
+  </section>
+</article>
+
+  
+    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
   <h2 class="headline" itemprop="headline"><a href="/post/http/">HttpAndUdpSocket</a></h2>
   <div class="meta">
 
@@ -67,29 +85,6 @@ urlConn.setConnectTimeout(5000);//设置连接的超时时间. urlConn.setReadTi
  SockertThread th = new SocketThread(socket); 
 然后创立好相应的线程类
 class SocketThread extends Thread{ private Socket socket; public SocketThread(){ } public SocketThread(Socket socket){ this.socket=socket; } @Override public void run(){ try{ InputStream in = socket.getInputStream();//获取当前对象socket来获取客户机的输入流 byte[] b = new byte[1024]; in.read(b)//这里假设数据小于1024，一次读完，也可以用while来读数据 String info = new String(b);//创建一个字符串来接受获得的信息 System.  <a href="/post/netcommution/">Read More...</a>
-  </section>
-</article>
-
-  
-    <article class="list-item" itemscope itemtype="http://schema.org/Blog">
-  <h2 class="headline" itemprop="headline"><a href="/post/thread/">Thread</a></h2>
-  <div class="meta">
-
-    <span class="key">published on</span>
-    <span class="val"><time itemprop="datePublished" datetime="2019-07-18">July 18, 2019</time></span>
-
-  </div>
-  <section class="summary">
-    本章内容为：《关于Thread类基础》 作者：nuoccc
-java.lang 类 Thread java.lang.Object 继承者 java.lang.Thread 所有已实现的接口： Runnable  以上是 jdk 关于Thread的 视图
-我们学习Thread类 就从提供的api入手
-构造器  学一个类一般我们都是先学构造器，Thread有多个，但我们一般用两个 1.Thread()，默认构造器，用法为：
- Thread th = new Thread(); 
-2.Thread(Runnable target),那Runnable是啥，我们看api底层定义
- @FunctionalInterface public interface Runnable { //中间一段注释我删了，有兴趣的可以自行通过底层查看 public abstract void run(); }  一目了然，Runnable是一个接口，定义了一个抽象方法run();所以我们在运用时就应该 使用一个实现了Runnable接口的对象我们从api视图可以知道，Thread实现了Runnable 接口，所以最常用的对象一般就是一个Thread的子类
-  线程使用方法  一个类最关键的是如果使用，我们看api手册，给出的方法 1.创建新执行线程有两种方法。一种方法是将类声明为 Thread 的子类。该子类应重写 Thread 类的 run 方法。接下来可以分配并启动该子类的实例。 2.创建线程的另一种方法是声明实现 Runnable 接口的类。该类然后实现 run 方法。然后可以分配该类的实例，在创建 Thread 时作为一个参数来传递并启动。 那我们根据手册给出的方法来使用Thread类
-1.根据第一种方法我们先创立一个子类，这里名字取为sonThread继承Thread
-class sonThread extends Thread { //会叫你重写一个run()方法，具体的定义为自己要执行的逻辑代码 //这里我们写一条输出语句随便测试下 @Override public void run() { System.  <a href="/post/thread/">Read More...</a>
   </section>
 </article>
 

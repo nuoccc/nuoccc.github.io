@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="generator" content="Hugo 0.55.6" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="/css/style.css" type="text/css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Code+Pro:400,700" type="text/css">
+<link rel="alternate" href="/index.xml" type="application/rss+xml" title="My New Hugo Site">
+<title>Sql - My New Hugo Site</title>
+</head>
+<body>
+
+<header>
+  <div class="container clearfix">
+    <a class="path" href="https://nuoccc.github.io/">[My New Hugo Site]</a>
+    <span class="caret"># _</span>
+    <div class="right">
+      
+    </div>
+  </div>
+</header>
+
+<div class="container">
+
+
+<main role="main" class="article">
+  
+<article class="single" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="meta">
+
+    <span class="key">published on</span>
+    <span class="val"><time itemprop="datePublished" datetime="2019-08-06">August 06, 2019</time></span>
+
+
+
+  </div>
+  <h1 class="headline" itemprop="headline">Sql</h1>
+  <section class="body" itemprop="articleBody">
+    
+
+<p>本章内容为：《SQL基础》</p>
+
+<h2 id="作者-nuoccc">作者：nuoccc</h2>
+
+<p>这篇文章 主要是进行 最基础的SQL语法学习，感兴趣的可以看看。</p>
+
+<p>首先我们常用的数据库模型就是关系数据库：由一张二维的表构成，表的列表示字段（属性），一行表示其中</p>
+
+<p>的一条记录。</p>
+
+<p>然后我们常见的数据库有：</p>
+
+<ul>
+<li>Oracle</li>
+<li>MySql</li>
+<li>DB2</li>
+<li>SQL Server</li>
+<li>sqlite</li>
+</ul>
+
+<p>SQL语句分类 :</p>
+
+<ul>
+<li>DDL（Data Definition Language）：数据定义语言，用来定义数据库对象：库、表、列等。</li>
+<li>DML（Data Manipulation Language）：数据操作语言，用来定义数据库记录（数据）。</li>
+<li>DCL（Data Control Language）：数据控制语言，用来定义访问权限和安全级别。</li>
+<li>DQL（Data Query Language）：数据查询语言，用来查询记录（数据）。</li>
+</ul>
+
+<p>我使用的是MySQL，其他数据库我也我不太了解，所以本篇文章只针对MySQL，其他数据库可能不全部适用。</p>
+
+<h4 id="一丶-创建数据库表">一丶 创建数据库表</h4>
+
+<p>首先我们来学如果创建数据库表:</p>
+
+<p>也就是我们SQL语句的DDL,用来定义数据库对象：库、表、列等。</p>
+
+<pre><code class="language-mysql">create database db_name character set utf8 collate uft8_general_ci;
+-- 创建一个字符集为utf-8的数据库，db_name是你自己要定义的数据库名字
+
+alter database db_name character set gbk;
+-- 选择数据库 并把字符集改为GBK编码，这里只是告诉这么用 没必要换成GBK
+
+drop database db_name;
+-- 删除数据库,drop 是删除关键字 一定要记住
+
+use db_name;
+-- 选择你要使用的数据库
+</code></pre>
+
+<p>数据库的定义学完后，我们选择当前创立的数据库，然后开始添加数据库表</p>
+
+<p>再添加数据库表前，先了解一下数据库的类型定义，以下是引用w3school中的定义，大概看下就好，不是全部</p>
+
+<p>都会使用:</p>
+
+<hr />
+
+<p>在 MySQL 中，有三种主要的类型：文本、数字和日期/时间类型。</p>
+
+<h3 id="text-类型">Text 类型：</h3>
+
+<table>
+<thead>
+<tr>
+<th align="left">数据类型</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">CHAR(size)</td>
+<td align="left">保存固定长度的字符串（可包含字母、数字以及特殊字符）。在括号中指定字符串的长度。最多 255 个字符。</td>
+</tr>
+
+<tr>
+<td align="left">VARCHAR(size)</td>
+<td align="left">保存可变长度的字符串（可包含字母、数字以及特殊字符）。在括号中指定字符串的最大长度。最多 255 个字符。注释：如果值的长度大于 255，则被转换为 TEXT 类型。</td>
+</tr>
+
+<tr>
+<td align="left">TINYTEXT</td>
+<td align="left">存放最大长度为 255 个字符的字符串。</td>
+</tr>
+
+<tr>
+<td align="left">TEXT</td>
+<td align="left">存放最大长度为 65,535 个字符的字符串。</td>
+</tr>
+
+<tr>
+<td align="left">BLOB</td>
+<td align="left">用于 BLOBs (Binary Large OBjects)。存放最多 65,535 字节的数据。</td>
+</tr>
+
+<tr>
+<td align="left">MEDIUMTEXT</td>
+<td align="left">存放最大长度为 16,777,215 个字符的字符串。</td>
+</tr>
+
+<tr>
+<td align="left">MEDIUMBLOB</td>
+<td align="left">用于 BLOBs (Binary Large OBjects)。存放最多 16,777,215 字节的数据。</td>
+</tr>
+
+<tr>
+<td align="left">LONGTEXT</td>
+<td align="left">存放最大长度为 4,294,967,295 个字符的字符串。</td>
+</tr>
+
+<tr>
+<td align="left">LONGBLOB</td>
+<td align="left">用于 BLOBs (Binary Large OBjects)。存放最多 4,294,967,295 字节的数据。</td>
+</tr>
+
+<tr>
+<td align="left">ENUM(x,y,z,etc.)</td>
+<td align="left">允许你输入可能值的列表。可以在 ENUM 列表中列出最大 65535 个值。如果列表中不存在插入的值，则插入空值。注释：这些值是按照你输入的顺序存储的。可以按照此格式输入可能的值：ENUM(&lsquo;X&rsquo;,&lsquo;Y&rsquo;,&lsquo;Z&rsquo;)</td>
+</tr>
+
+<tr>
+<td align="left">SET</td>
+<td align="left">与 ENUM 类似，SET 最多只能包含 64 个列表项，不过 SET 可存储一个以上的值。</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="number-类型">Number 类型：</h3>
+
+<table>
+<thead>
+<tr>
+<th align="left">数据类型</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">TINYINT(size)</td>
+<td align="left">-128 到 127 常规。0 到 255 无符号*。在括号中规定最大位数。</td>
+</tr>
+
+<tr>
+<td align="left">SMALLINT(size)</td>
+<td align="left">-32768 到 32767 常规。0 到 65535 无符号*。在括号中规定最大位数。</td>
+</tr>
+
+<tr>
+<td align="left">MEDIUMINT(size)</td>
+<td align="left">-8388608 到 8388607 普通。0 to 16777215 无符号*。在括号中规定最大位数。</td>
+</tr>
+
+<tr>
+<td align="left">INT(size)</td>
+<td align="left">-2147483648 到 2147483647 常规。0 到 4294967295 无符号*。在括号中规定最大位数。</td>
+</tr>
+
+<tr>
+<td align="left">BIGINT(size)</td>
+<td align="left">-9223372036854775808 到 9223372036854775807 常规。0 到 18446744073709551615 无符号*。在括号中规定最大位数。</td>
+</tr>
+
+<tr>
+<td align="left">FLOAT(size,d)</td>
+<td align="left">带有浮动小数点的小数字。在括号中规定最大位数。在 d 参数中规定小数点右侧的最大位数。</td>
+</tr>
+
+<tr>
+<td align="left">DOUBLE(size,d)</td>
+<td align="left">带有浮动小数点的大数字。在括号中规定最大位数。在 d 参数中规定小数点右侧的最大位数。</td>
+</tr>
+
+<tr>
+<td align="left">DECIMAL(size,d)</td>
+<td align="left">作为字符串存储的 DOUBLE 类型，允许固定的小数点。</td>
+</tr>
+</tbody>
+</table>
+
+<p>* 这些整数类型拥有额外的选项 UNSIGNED。通常，整数可以是负数或正数。如果添加 UNSIGNED 属性，那么范围将从 0 开始，而不是某个负数。</p>
+
+<h3 id="date-类型">Date 类型：</h3>
+
+<table>
+<thead>
+<tr>
+<th align="left">数据类型</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">DATE()</td>
+<td align="left">日期。格式：YYYY-MM-DD注释：支持的范围是从 &lsquo;1000-01-01&rsquo; 到 &lsquo;9999-12-31&rsquo;</td>
+</tr>
+
+<tr>
+<td align="left">DATETIME()</td>
+<td align="left">*日期和时间的组合。格式：YYYY-MM-DD HH:MM:SS注释：支持的范围是从 &lsquo;1000-01-01 00:00:00&rsquo; 到 &lsquo;9999-12-31 23:59:59&rsquo;</td>
+</tr>
+
+<tr>
+<td align="left">TIMESTAMP()</td>
+<td align="left">*时间戳。TIMESTAMP 值使用 Unix 纪元(&lsquo;1970-01-01 00:00:00&rsquo; UTC) 至今的描述来存储。格式：YYYY-MM-DD HH:MM:SS注释：支持的范围是从 &lsquo;1970-01-01 00:00:01&rsquo; UTC 到 &lsquo;2038-01-09 03:14:07&rsquo; UTC</td>
+</tr>
+
+<tr>
+<td align="left">TIME()</td>
+<td align="left">时间。格式：HH:MM:SS 注释：支持的范围是从 &lsquo;-838:59:59&rsquo; 到 &lsquo;838:59:59&rsquo;</td>
+</tr>
+
+<tr>
+<td align="left">YEAR()</td>
+<td align="left">2 位或 4 位格式的年。注释：4 位格式所允许的值：1901 到 2155。2 位格式所允许的值：70 到 69，表示从 1970 到 2069。</td>
+</tr>
+</tbody>
+</table>
+
+<p>* 即便 DATETIME 和 TIMESTAMP 返回相同的格式，它们的工作方式很不同。在 INSERT 或 UPDATE 查询中，TIMESTAMP 自动把自身设置为当前的日期和时间。TIMESTAMP 也接受不同的格式，比如 YYYYMMDDHHMMSS、YYMMDDHHMMSS、YYYYMMDD 或 YYMMDD。</p>
+
+<hr />
+
+<p>看完MySQL中关于数据类型的定义，接下来我们就可以来创建表了</p>
+
+<pre><code class="language-mysql">create table table_name;
+-- 创建一个表，table_name是你自己定义的表明
+
+create table table_name
+(
+/*
+	属性1 类型 约束,
+	属性2 类型 约束,
+	...
+	属性n 类型 约束
+	
+	这种方法其实更实用，初始定义里面的属性。
+*/
+
+)ENGINE=InnoDB DEFAULT CHARST=uf8;
+-- 最后一句话定义引擎 已经字符集
+
+show tables;
+-- 查看数据库中所有的表
+
+desc table_name;
+-- 显示当前表的字段信息
+
+alter table table_name add 属性 数据类型 约束;
+/* 用于创建表后再加数据
+例如 alter table test add name varchar(20) not null;
+给名为test的表添加了一条name属性 长度为20的可变字符串 该属性不能为空，not null就是一种约束。
+*/
+
+alter table table_name modify 属性 数据类型 新约束；
+-- 用于修改之前定义的约束,modify 修改
+
+alter table table_name drop 属性；
+-- 从表中删除这个属性
+
+drop table table_name;
+-- 删除整个表
+</code></pre>
+
+<p>这些就是表的创建操作</p>
+
+<h4 id="二丶约束">二丶约束</h4>
+
+<p>之前在定义表的时候，我们发现创建一条数据除了需要数据名也就是属性，数据类型之外，还需要一个约束；</p>
+
+<p>所以我们就来看看什么叫做约束。</p>
+
+<ul>
+<li>非空约束：</li>
+</ul>
+
+<p>NOT NULL表示非空约束，定义了此约束后，该属性就不能为NULL，MySQL中默认为NULL，所以当你想让表的属性为非空时，就需要定义非空约束。</p>
+
+<ul>
+<li>默认:</li>
+</ul>
+
+<p>DEFAULT  可以给属性添加一个默认值，例如:</p>
+
+<p>alter table test add name varchar(20) default &lsquo;测试1&rsquo;;</p>
+
+<p>使用上面这条命令后，以后你插入数据时，如果不定义name的值,就会默认为&rsquo;测试1&rsquo;而不再是NULL。</p>
+
+<ul>
+<li>唯一约束:</li>
+</ul>
+
+<p>UNIQUE，使用此约束后，代表该属性的值不能重复，也就是说你后面插入的数据，同一属性只能有唯一值。</p>
+
+<ul>
+<li>主键约束:</li>
+</ul>
+
+<p>PRIMARY KEY,使用该约束后，自动默认这个属性是非空不可重复，因为加上主键约束后，就代表这个属性</p>
+
+<p>是唯一的，能直接识别出实体，例如一个人的属性有姓名，年龄，身份证号，只有身份证号是唯一的，其他都可能跟他人有重复的，所以我们主键一般也用于定义id之类的能代表唯一的数据。</p>
+
+<ul>
+<li>自动递增:</li>
+</ul>
+
+<p>AUTO_INCREMENT，以初始值为1，每次增加1，但需要配合主键使用，一般也使用于id之上。</p>
+
+<p>但要注意 例如我创建了五条数据：</p>
+
+<p>id</p>
+
+<p>1</p>
+
+<p>2</p>
+
+<p>3</p>
+
+<p>4</p>
+
+<p>5</p>
+
+<p>如果我创建第六条数据失败，或者是我创建第六条数据后又对他进行删除操作，这个从操作后的加，</p>
+
+<p>就比如我现在id是5，操作之后id就会变成6，不管是失败还是后面删除了，下一条id就会从7开始加，</p>
+
+<p>为了想要连续的id我们一般进行完这类操作后，可以自己给id赋值，这样就会从赋值的继续开始递增。</p>
+
+<ul>
+<li>外键约束:</li>
+</ul>
+
+<p>实体间的关联关系分为四种:</p>
+
+<p>一对一:例如夫妻，一个男的只能拥有一个妻子。</p>
+
+<p>一对多:比如一个班的学生，学生有很多个，但这个班只有一个。</p>
+
+<p>多对一:反过来理解罢了，本质跟第二个是一样的。</p>
+
+<p>多对多:就比如 一个学生的老师 可能有很多个，同理一个老师教的学生也有很多个。</p>
+
+<p>了解完关联关系后，在我们表中 各各表也存在这种关系。</p>
+
+<p>我们之前知道了主键可以确定一个实体，那我们其他表想用这个实体怎么办，这时候就需要引入外键。</p>
+
+<p>外键的作用就是在另外的表指定，你就是那个实体。</p>
+
+<p>具体用法为：</p>
+
+<pre><code class="language-mysql">  create table roles
+  -- 创建一个角色表(主键表)
+  (
+  	id int primary key auto_increment,
+  	name varchar(20) not null
+  );
+  
+  /*
+  id 		name
+  1		管理员
+  2		学生
+  3		教师
+  这里我们假设插入这三条数据
+  */
+  
+  //用户表(外键表)
+  create table users
+  (
+  	id int primary key auto_increment,
+  	name varchar(20) not null,
+  	pwd varchar(20) not null,
+  	role_id int, -- 外键
+  	foreign key(role_id) references roles(id)
+     	/*
+      这里我们创建了外键role_id，然后我们指明这个键key(role_id)是引用的(references)
+      roles表中的id，这样定义了外键之后，我们当前的这个role_id就代表了roles的id，如果
+      你插入数据比如我插入一个role_id=4,这时候就会报错，因为我们roles的id只有1-3。
+      */
+  );
+</code></pre>
+
+<h4 id="三丶数据库表插入数据">三丶数据库表插入数据</h4>
+
+<p>学完了我们的DDL语句后，我们来学习DML语句，也就是对表中的数据进行增加，删除，修改的操作。</p>
+
+<pre><code class="language-mysql">INSERT INTO TABLE_NAME(属性1,属性2,属性3...)VALUES(值1,值2,值3...);
+/*
+插入数据语句,具体用法如下:
+例如我已经创建了一个表 如下
+test（表名）
+id  name  age
+我要插入响应的数据就应该使用以下语法:
+insert into test(id,name,age) values(1,'小明',20);
+就会生成以下数据:
+test
+id name age
+1   小明 20
+
+如果要对表中一行数据的所有属性赋值，可以省略前面的，例如:
+insert into test values(2,'小花',21);
+*/
+
+UPDATE TABLE_NAME SET 属性1=新值1，属性2=新值2，属性3=新值3,...[WHERE 条件]
+/*
+更新语句，具体用法如下:
+在上一个插入语句注释之后，我们的表应该是这个样子
+test
+id  name age
+1   小明  20
+2   小花  21
+如果我们要更新第二条数据，例如名字写错了应该是'小华'而不是'小花',这时候就可以使用更新语句如下:
+UPDATE TEST SET NAME='小华' where id=2;
+*/
+
+DELETE FROM TABLE_NAME [WHERE 条件]
+/*
+删除一条数据，具体用法如下:
+我们现在表应该是这个样子:
+test
+id name age
+1   小明 20
+2   小华 21
+如果我们觉得第二条数据现在不需要了，就可以删除语句：
+delete from test where name='小华';
+这样就会删除名字是小华的数据，表现在就会如下:
+test
+id name age
+1   小明 20
+
+再删除语句中，还有个语句也能删除TRUNCATE TABLE TABLE_NAME
+这个语句不需要加条件，因为它是把整张表删除了，然后在创立了一个属性跟原来表一样的新表，
+跟delete最大的区别在于，delete其实删除的东西有点像我们windows删数据丢入垃圾回收站，
+里面删除的数据，其实我们是能找回来的，而truncate删除的东西，我们找不回来，其实不是找不回来，
+只是没那么容易找回来，当然truncate也有好处，就是效率比delete快。
+*/
+</code></pre>
+
+  </section>
+</article>
+
+</main>
+
+</div>
+
+<footer>
+  <div class="container">
+    <span class="copyright">&copy; 2019 My New Hugo Site - <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
+
